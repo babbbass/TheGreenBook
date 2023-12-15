@@ -1,15 +1,7 @@
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormControl,
-  FormDescription,
-  FormMessage,
-} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { getAuthSession } from "@/lib/auth"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 const formSchema = z.object({
@@ -18,7 +10,8 @@ const formSchema = z.object({
   }),
 })
 
-export default function Home() {
+export default async function Home() {
+  const session = await getAuthSession()
   //   const form = useForm<z.infer<typeof formSchema>>({
   //     resolver: zodResolver(formSchema),
   //     defaultValues: {
