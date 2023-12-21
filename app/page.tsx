@@ -1,29 +1,39 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import { BettingForm } from "@/components/form/bettingForm"
+import { ReturnOnInvestmentForm } from "@/components/form/returnOnInvestmentForm"
 import { getAuthSession } from "@/lib/auth"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-
-const formSchema = z.object({
-  start_amount: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-})
+import { prisma } from "@/lib/prisma"
 
 export default async function Home() {
   const session = await getAuthSession()
-  //   const form = useForm<z.infer<typeof formSchema>>({
-  //     resolver: zodResolver(formSchema),
-  //     defaultValues: {
-  //       start_amount: "",
-  //     },
-  //   })
+
+  if (!session) {
+    return <ReturnOnInvestmentForm startAmount={0} currentAmount={0} />
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session?.user.id,
+    },
+    select: {
+      profile: {
+        select: {
+          startAmount: true,
+          currentAmount: true,
+        },
+      },
+    },
+  })
+
+  const startAmount = Number(user?.profile?.startAmount)
+  const currentAmount = Number(user?.profile?.currentAmount)
 
   return (
-    <form className='flex flex-col gap-2'>
-      <Input type='text' name='start_amount' placeholder='Montant départ' />
-      <Input type='text' name='current_amount' placeholder='Montant actuel' />
-      <Button type='submit'>Calcul</Button>
-    </form>
+    <>
+      <BettingForm />
+      <ReturnOnInvestmentForm
+        startAmount={startAmount}
+        currentAmount={currentAmount}
+      />
+    </>
   )
 }
