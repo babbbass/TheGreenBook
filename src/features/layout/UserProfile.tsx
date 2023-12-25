@@ -8,7 +8,7 @@ import { getAuthSession } from "@/lib/auth"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import React from "react"
-import { User2 } from "lucide-react"
+import { User2, Newspaper } from "lucide-react"
 import { DropdownMenuItemLogout } from "./DropdownMenuItemLogout"
 
 export const UserProfile = async () => {
@@ -24,6 +24,11 @@ export const UserProfile = async () => {
         <DropdownMenuItem asChild>
           <Link href='/profile'>
             <User2 className='mr-2 h-4 w-4s' /> Profile
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href='/mes-paris'>
+            <Newspaper className='mr-2 h-4 w-4s' /> Mes paris
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItemLogout />
