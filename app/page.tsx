@@ -7,7 +7,9 @@ export default async function Home() {
   const session = await getAuthSession()
 
   if (!session) {
-    return <ReturnOnInvestmentForm startAmount={0} currentAmount={0} />
+    return (
+      <ReturnOnInvestmentForm startAmount={0} currentAmountFromDatabase={0} />
+    )
   }
 
   const user = await prisma.user.findUnique({
@@ -29,10 +31,10 @@ export default async function Home() {
 
   return (
     <>
-      <BettingForm />
+      <BettingForm currentAmountFromDatabase={currentAmount} />
       <ReturnOnInvestmentForm
         startAmount={startAmount}
-        currentAmount={currentAmount}
+        currentAmountFromDatabase={currentAmount}
       />
     </>
   )

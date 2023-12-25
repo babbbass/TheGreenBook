@@ -55,7 +55,8 @@ model User {
 
   accounts      Account[]
   sessions      Session[]
-  profile       Profile? @relation("profile")
+  profile       Profile?  @relation("profile")
+  bets          Bets[]   @relation("userBets")
 }
 
 model Profile {
@@ -67,4 +68,16 @@ model Profile {
   updatedAt     DateTime  @default(now())
 
   user          User      @relation("profile", fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Bets {
+  id            String    @id @default(cuid())
+  amount        Float
+  odd           Float
+  status        String
+  userId        String    
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @default(now())
+  
+  user          User      @relation("userBets", fields: [userId], references: [id], onDelete: Cascade)
 }

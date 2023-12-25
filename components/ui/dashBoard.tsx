@@ -1,14 +1,33 @@
+"use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-
+import { useEffect, useState } from "react"
+import {
+  returnOnInvestmentFunc,
+  percentageOnInvestmentFunc,
+} from "@/lib/calculation"
+import { useDashBoardContext } from "@/context/dashboardContext"
 type DashBoard = {
-  returnOnInvestment: number
-  percentageOnInvestment: number
+  currentAmount: number
+  startAmount: number
 }
-export const DashBoard = async ({
-  returnOnInvestment,
-  percentageOnInvestment,
-}: DashBoard) => {
-  //console.log(updateProfileUser)
+export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
+  const { userCurrentAmount } = useDashBoardContext()
+  const [returnOnInvestment, setReturnOnInvestment] = useState(
+    returnOnInvestmentFunc(startAmount, currentAmount)
+  )
+  const [percentageOnInvestment, setPercentageOnInvestment] = useState(
+    percentageOnInvestmentFunc(startAmount, currentAmount)
+  )
+
+  useEffect(() => {
+    if (userCurrentAmount <= 0) return
+    setReturnOnInvestment(
+      returnOnInvestmentFunc(startAmount, userCurrentAmount)
+    )
+    setPercentageOnInvestment(
+      percentageOnInvestmentFunc(startAmount, userCurrentAmount)
+    )
+  }, [userCurrentAmount, startAmount])
 
   return (
     <>
