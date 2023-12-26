@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { BadgeCheck, XCircle } from "lucide-react"
-import React from "react"
+import { WinningBetButton } from "@/components/button/winningBetButton"
+import { LosingBetButton } from "@/components/button/losingBetButton"
 
 const formatDate = (date: Date) => {
   const day = date.getDate().toString().padStart(2, "0")
@@ -23,7 +22,9 @@ const Bets = async () => {
   console.log(myBets)
   return (
     <Card className='flex flex-col items-center my-6'>
-      <CardHeader className='font-bold text-lg'>Mes paris</CardHeader>
+      <CardHeader className='font-bold text-lg'>
+        <h1 className='text-2xl'>Mes paris</h1>
+      </CardHeader>
       <CardContent className='flex flex-col items-center'>
         {myBets.length === 0 && (
           <p className='italic'>{`Vous n'avez pas encore de paris`}</p>
@@ -50,12 +51,8 @@ const Bets = async () => {
               <span>{formatDate(bet.createdAt)}</span>
             </div>
             <div className='flex gap-4 items-center'>
-              <Button className='bg-white'>
-                <BadgeCheck className='text-green-500' />
-              </Button>
-              <Button className='bg-white'>
-                <XCircle className='text-red-500' />
-              </Button>
+              <WinningBetButton />
+              <LosingBetButton />
             </div>
           </div>
         ))}

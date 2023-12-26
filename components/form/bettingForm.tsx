@@ -23,7 +23,7 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
   }
 
   return (
-    <Card className=' py my-4 flex flex-col items-center gap-4'>
+    <Card className='py my-4 flex flex-col items-center gap-4'>
       <CardHeader className='font-bold'>Mon pari</CardHeader>
       <CardContent>
         <form action={handleSubmit} className='space-y-8'>
