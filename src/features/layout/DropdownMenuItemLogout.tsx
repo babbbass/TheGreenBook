@@ -10,7 +10,10 @@ import React, { useTransition } from "react"
 export const DropdownMenuItemLogout = () => {
   const [isPending, startTransition] = useTransition()
   return (
-    <DropdownMenuItem onClick={() => startTransition(() => signOut())}>
+    <DropdownMenuItem
+      className='cursor-pointer hover:text-texthover hover:font-bold'
+      onClick={() => startTransition(() => signOut())}
+    >
       {isPending ? (
         <Loader className='mr-2 h-4 w-4' />
       ) : (

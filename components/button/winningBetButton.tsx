@@ -1,14 +1,40 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { BadgeCheck } from "lucide-react"
+import { updateBetStatusInDatabase } from "@/lib/actions/updateProfile"
+import clsx from "clsx"
 
-const winningBet = () => {
-  console.log("validation")
+export const STATUSLOST = "Lost"
+export const STATUSWIN = "Won"
+export type Bet = {
+  bet: {
+    id: string
+    userId: string
+  }
+  betStatus: string
+  updateStatus: (arg0: string) => void
 }
-export const WinningBetButton = () => {
+const updateBetStatus = async (bet: { id: string; userId: string }) => {
+  await updateBetStatusInDatabase(bet, STATUSWIN)
+}
+
+export const WinningBetButton = ({ bet, betStatus, updateStatus }: Bet) => {
   return (
-    <Button className='bg-white' onClick={winningBet}>
-      <BadgeCheck className='text-green-500' />
+    <Button
+      className={clsx("bg-white cursor-pointer", {
+        "opacity-20": betStatus === STATUSLOST,
+        "cursor-not-allowed  bg-gray-200":
+          betStatus === STATUSLOST || STATUSWIN,
+      })}
+      onClick={() => {
+        if (betStatus === STATUSLOST || STATUSWIN) {
+          return
+        }
+        updateStatus(STATUSWIN)
+        updateBetStatus(bet)
+      }}
+    >
+      <BadgeCheck className='text-title' />
     </Button>
   )
 }
