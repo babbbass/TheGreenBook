@@ -16,16 +16,16 @@ export type Bet = {
 const updateBetStatus = async (bet: { id: string; userId: string }) => {
   await updateBetStatusInDatabase(bet, STATUSLOST)
 }
-
+const status = [STATUSLOST, STATUSWIN]
 export const LosingBetButton = ({ bet, betStatus, updateStatus }: Bet) => {
   return (
     <Button
       className={clsx("bg-white cursor-pointer", {
         "opacity-20": betStatus === STATUSWIN,
-        "cursor-not-allowed bg-gray-200": betStatus === STATUSLOST || STATUSWIN,
+        "cursor-not-allowed bg-gray-200": status.includes(betStatus),
       })}
       onClick={() => {
-        if (betStatus === STATUSLOST || STATUSWIN) {
+        if (status.includes(betStatus)) {
           return
         }
         updateBetStatus(bet)

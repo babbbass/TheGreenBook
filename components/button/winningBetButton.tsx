@@ -18,16 +18,16 @@ const updateBetStatus = async (bet: { id: string; userId: string }) => {
   await updateBetStatusInDatabase(bet, STATUSWIN)
 }
 
+const status = [STATUSLOST, STATUSWIN]
 export const WinningBetButton = ({ bet, betStatus, updateStatus }: Bet) => {
   return (
     <Button
       className={clsx("bg-white cursor-pointer", {
         "opacity-20": betStatus === STATUSLOST,
-        "cursor-not-allowed  bg-gray-200":
-          betStatus === STATUSLOST || STATUSWIN,
+        "cursor-not-allowed  bg-gray-200": status.includes(betStatus),
       })}
       onClick={() => {
-        if (betStatus === STATUSLOST || STATUSWIN) {
+        if (status.includes(betStatus)) {
           return
         }
         updateStatus(STATUSWIN)
