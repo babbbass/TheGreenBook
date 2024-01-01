@@ -2,6 +2,7 @@ import { BettingForm } from "@/components/form/bettingForm"
 import { ReturnOnInvestmentForm } from "@/components/form/returnOnInvestmentForm"
 import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { CapitalGainChartLine } from "@/components/chart/capitalGainChartLine"
 
 export default async function Home() {
   const session = await getAuthSession()
@@ -26,6 +27,17 @@ export default async function Home() {
     },
   })
 
+  const userBets = await prisma.bets.findMany({
+    where: {
+      userId: session?.user.id,
+    },
+    select: {
+      amount: true,
+      odd: true,
+      status: true,
+    },
+  })
+
   const startAmount = Number(user?.profile?.startAmount)
   const currentAmount = Number(user?.profile?.currentAmount)
 
@@ -36,6 +48,7 @@ export default async function Home() {
         startAmount={startAmount}
         currentAmountFromDatabase={currentAmount}
       />
+      <CapitalGainChartLine startAmount={startAmount} userBets={userBets} />
     </>
   )
 }

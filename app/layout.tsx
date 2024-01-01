@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang='en'>
       <body className={clsx(inter.className, "bg-background h-full")}>
         <DashBoardWrapper>
-          <div className='flex flex-col h-full'>
+          <div className='flex flex-col h-full py-4'>
             <Header />
             <div className='flex-1 max-w-lg m-auto py-12 w-full'>
               {children}

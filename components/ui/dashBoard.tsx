@@ -6,6 +6,7 @@ import {
   percentageOnInvestmentFunc,
 } from "@/lib/calculation"
 import { useDashBoardContext } from "@/context/dashboardContext"
+
 type DashBoard = {
   currentAmount: number
   startAmount: number
