@@ -32,11 +32,11 @@ export const Bet = ({ bet }: Bet) => {
           "border-red-500": betStatus === "Lost",
           "border-title": betStatus === "Won",
         },
-        "border-2 mb-2 p-2 flex gap-4 items-center"
+        "border-2 mb-2 p-2 flex gap-2 items-center rounded-lg"
       )}
     >
       <div className={"flex flex-col items-center justify-center px-2"}>
-        <span className='font-bold'>Mise</span>
+        <span className='font-bold'>M</span>
         <span>{bet.amount}€</span>
       </div>
       <div className='flex flex-col items-center'>
@@ -44,7 +44,7 @@ export const Bet = ({ bet }: Bet) => {
         <span>{bet.odd}</span>
       </div>
       <div className='flex flex-col items-center'>
-        <span className='font-bold'>Status</span>
+        <span className='font-bold'>S</span>
         <span
           className={clsx({
             "text-red-500 font-semibold": betStatus === "Lost",

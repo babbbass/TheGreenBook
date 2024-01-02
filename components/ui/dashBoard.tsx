@@ -5,6 +5,8 @@ import {
   returnOnInvestmentFunc,
   percentageOnInvestmentFunc,
 } from "@/lib/calculation"
+import { Label } from "@/components/ui/label"
+import { Badge } from "@/components/ui/badge"
 import { useDashBoardContext } from "@/context/dashboardContext"
 
 type DashBoard = {
@@ -32,19 +34,25 @@ export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
 
   return (
     <>
-      <Card className='flex flex-col items-center my-6'>
-        <CardHeader>
-          <CardTitle>Mon Tableau de bord</CardTitle>
+      <Card className='py-4 flex flex-col items-center gap-4'>
+        <CardHeader className='w-full flex items-center font-bold text-2xl'>
+          <CardTitle>Benefices</CardTitle>
         </CardHeader>
-        <CardContent className='flex gap-2 w-full justify-around'>
-          <div className='flex flex-col items-center'>
-            <h3>Mon ROI</h3>
-            <p>{returnOnInvestment}</p>
-          </div>
-          <div className='flex flex-col items-center'>
-            <h3>% de gain</h3>
-            <p>{percentageOnInvestment}</p>
-          </div>
+        <CardContent>
+          <form className='space-y-8'>
+            <div className='flex flex-col gap-4'>
+              <Label className='ml-2 font-semibold'>Mon ROI</Label>
+              <Badge className='h-10 flex items-center justify-center'>
+                {returnOnInvestment}
+              </Badge>
+            </div>
+            <div className='flex flex-col gap-4'>
+              <Label className='ml-2 font-semibold'>% de gain</Label>
+              <Badge className='h-10 flex items-center justify-center'>
+                {percentageOnInvestment}
+              </Badge>
+            </div>
+          </form>
         </CardContent>
       </Card>
     </>

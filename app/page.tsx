@@ -3,6 +3,7 @@ import { ReturnOnInvestmentForm } from "@/components/form/returnOnInvestmentForm
 import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { CapitalGainChartLine } from "@/components/chart/capitalGainChartLine"
+import { Card } from "@/components/ui/card"
 
 export default async function Home() {
   const session = await getAuthSession()
@@ -43,11 +44,13 @@ export default async function Home() {
 
   return (
     <>
-      <BettingForm currentAmountFromDatabase={currentAmount} />
-      <ReturnOnInvestmentForm
-        startAmount={startAmount}
-        currentAmountFromDatabase={currentAmount}
-      />
+      <Card className='flex flex-col md:flex-row bg-background border-none p-2 gap-4 mb-4'>
+        <BettingForm currentAmountFromDatabase={currentAmount} />
+        <ReturnOnInvestmentForm
+          startAmount={startAmount}
+          currentAmountFromDatabase={currentAmount}
+        />
+      </Card>
       <CapitalGainChartLine startAmount={startAmount} userBets={userBets} />
     </>
   )

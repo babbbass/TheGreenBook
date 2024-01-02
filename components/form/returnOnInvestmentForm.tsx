@@ -1,9 +1,10 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Label } from "../ui/label"
 import { DashBoard } from "../ui/dashBoard"
 import { updateProfileUser } from "@/lib/actions/updateProfile"
-import { Card, CardHeader } from "../ui/card"
+import { Card, CardHeader, CardContent, CardTitle } from "../ui/card"
 import { useDashBoardContext } from "@/context/dashboardContext"
 
 export type Amounts = {
@@ -24,29 +25,41 @@ export const ReturnOnInvestmentForm = ({
 
   return (
     <>
-      <Card className='p-4'>
+      <Card className='py-4 flex flex-col items-center gap-4'>
         <CardHeader className='w-full flex items-center font-bold text-2xl'>
-          Vos montants
+          <CardTitle>Montants</CardTitle>
         </CardHeader>
-        <form action={handleSubmit} className='space-y-8'>
-          <Input
-            name='startAmount'
-            placeholder={`${startAmount}`}
-            defaultValue={startAmount}
-          />
-          <Input
-            name='currentAmount'
-            placeholder={`${currentAmountFromDatabase}`}
-            defaultValue={
-              userCurrentAmount > 0
-                ? userCurrentAmount
-                : currentAmountFromDatabase
-            }
-          />
-          <div className='flex flex-row-reverse w-full'>
-            <Button type='submit'>Mon ROI</Button>
-          </div>
-        </form>
+        <CardContent>
+          <form action={handleSubmit} className='space-y-8'>
+            <div className='flex flex-col gap-4'>
+              <Label className='ml-2 font-semibold' htmlFor='amount'>
+                Montant demarrage
+              </Label>
+              <Input
+                name='startAmount'
+                placeholder={`${startAmount}`}
+                defaultValue={startAmount}
+              />
+            </div>
+            <div className='flex flex-col gap-4'>
+              <Label className='ml-2 font-semibold' htmlFor='amount'>
+                Montant actuelle
+              </Label>
+              <Input
+                name='currentAmount'
+                placeholder={`${currentAmountFromDatabase}`}
+                defaultValue={
+                  userCurrentAmount > 0
+                    ? userCurrentAmount
+                    : currentAmountFromDatabase
+                }
+              />
+            </div>
+            <div className='flex flex-row-reverse w-full'>
+              <Button type='submit'>Mon ROI</Button>
+            </div>
+          </form>
+        </CardContent>
       </Card>
       <DashBoard
         currentAmount={

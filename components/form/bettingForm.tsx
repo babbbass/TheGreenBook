@@ -1,39 +1,46 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader } from "../ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "../ui/label"
 import { enterBetInDatabase } from "@/lib/actions/updateProfile"
 import { useDashBoardContext } from "@/context/dashboardContext"
-
+import { useRef, useState } from "react"
 type BettingFormData = {
   currentAmountFromDatabase: number
 }
 export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
   const { userCurrentAmount, setUserCurrentAmount } = useDashBoardContext()
+  const ref = useRef<HTMLFormElement>(null)
+  // const [amount, setAmount] = useState<string | number>("")
+  // const [odd, setOdd] = useState<string | number>("")
 
   async function handleSubmit(formData: FormData) {
-    await enterBetInDatabase(
-      Number(formData.get("amount")),
-      Number(formData.get("odd"))
-    )
-    const currentAmount =
-      currentAmountFromDatabase - Number(formData.get("amount"))
-    setUserCurrentAmount(currentAmount)
+    // const currentAmount =
+    //   currentAmountFromDatabase - Number(formData.get("amount"))
+    // setUserCurrentAmount(currentAmount)
+
+    // await enterBetInDatabase(
+    //     Number(formData.get("amount")),
+    //     Number(formData.get("odd"))
+    //   )
+    ref.current?.reset()
   }
 
   return (
-    <Card className='py my-4 flex flex-col items-center gap-4'>
-      <CardHeader className='font-bold'>Mon pari</CardHeader>
+    <Card className='py-4 flex flex-col items-center gap-4'>
+      <CardHeader className='w-full flex items-center font-bold text-2xl'>
+        <CardTitle> Mon pari</CardTitle>
+      </CardHeader>
       <CardContent>
-        <form action={handleSubmit} className='space-y-8'>
-          <div className='flex flex-col gap-2'>
+        <form ref={ref} action={handleSubmit} className='space-y-8'>
+          <div className='flex flex-col gap-4'>
             <Label className='ml-2 font-semibold' htmlFor='amount'>
               Montant
             </Label>
             <Input placeholder='0' name='amount' />
           </div>
-          <div className='flex flex-col gap-2'>
+          <div className='flex flex-col gap-4'>
             <Label className='ml-2 font-semibold' htmlFor='odd'>
               Côte
             </Label>
