@@ -9,7 +9,8 @@ import {
   Tooltip,
   Legend,
 } from "recharts"
-import { Card } from "@/components/ui/card"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { useCapitalGainChartContext } from "@/context/capitalGainChartContext"
 
 type CapitalGainChartLineProps = {
   startAmount: number
@@ -18,27 +19,35 @@ type CapitalGainChartLineProps = {
 
 const updateMyAmountGrowth = (status: string, amount: number, odd: number) => {
   if (status === "Won") return amount * odd
-  if (status === "Pending") return -amount
-  return 0
+  return -amount
 }
 
 export const CapitalGainChartLine = ({
   startAmount,
   userBets,
 }: CapitalGainChartLineProps) => {
-  const myAmountGrowth = [{ name: 0, amount: startAmount }]
+  const { userBetsContext, setUserBetsContext } = useCapitalGainChartContext()
+  const userBetsToDisplay =
+    userBetsContext.length > userBets.length ? userBetsContext : userBets
+
+  const myAmountGrowth = [{ name: 0, amount: startAmount, id: 0 }]
   let startAmountCopy = startAmount
-  const data = userBets.map(({ amount, odd, status }) => {
+
+  userBetsToDisplay.map(({ amount, odd, status }, index) => {
     startAmountCopy += updateMyAmountGrowth(status, amount, odd)
     myAmountGrowth.push({
       name: myAmountGrowth.length,
       amount: startAmountCopy,
+      id: index,
     })
     return { amount, odd, status }
   })
 
   return (
     <Card className='flex flex-col items-center p-2 bg-slate-50'>
+      <CardHeader className='w-full flex items-center font-bold text-2xl'>
+        <CardTitle>Capital Gain Chart</CardTitle>
+      </CardHeader>
       <LineChart
         width={450}
         height={300}
@@ -54,7 +63,7 @@ export const CapitalGainChartLine = ({
           type='monotone'
           dataKey='amount'
           stroke='#218358'
-          activeDot={{ r: 8 }}
+          //activeDot={{ r: 8 }}
         />
         <XAxis dataKey='name' />
         <YAxis />

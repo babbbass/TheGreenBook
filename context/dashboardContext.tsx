@@ -16,9 +16,13 @@ export const DashBoardWrapper = ({
   children: React.ReactNode
 }) => {
   const [userCurrentAmount, setUserCurrentAmount] = useState(0)
+
   return (
     <DashBoardContext.Provider
-      value={{ userCurrentAmount, setUserCurrentAmount }}
+      value={{
+        userCurrentAmount,
+        setUserCurrentAmount,
+      }}
     >
       {children}
     </DashBoardContext.Provider>

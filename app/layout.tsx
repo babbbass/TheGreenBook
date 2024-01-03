@@ -5,6 +5,7 @@ import clsx from "clsx"
 import { Header } from "@/src/features/layout/Header"
 import { Footer } from "@/src/features/layout/Footer"
 import { DashBoardWrapper } from "@/context/dashboardContext"
+import { CapitalGainChartWrapper } from "@/context/capitalGainChartContext"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -24,9 +25,11 @@ export default function RootLayout({
         <DashBoardWrapper>
           <div className='flex flex-col h-full py-4 px-2'>
             <Header />
-            <div className='flex-1 max-w-3xl m-auto py-12 w-full'>
-              {children}
-            </div>
+            <CapitalGainChartWrapper>
+              <div className='flex-1 max-w-3xl m-auto py-12 w-full'>
+                {children}
+              </div>
+            </CapitalGainChartWrapper>
             <Footer />
           </div>
         </DashBoardWrapper>

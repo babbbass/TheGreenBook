@@ -3,27 +3,37 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "../ui/label"
-import { enterBetInDatabase } from "@/lib/actions/updateProfile"
+import { enterBetInDatabase, fetchUserBets } from "@/lib/actions/updateProfile"
 import { useDashBoardContext } from "@/context/dashboardContext"
-import { useRef, useState } from "react"
+import { useCapitalGainChartContext } from "@/context/capitalGainChartContext"
+import { useRef } from "react"
 type BettingFormData = {
   currentAmountFromDatabase: number
 }
 export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
-  const { userCurrentAmount, setUserCurrentAmount } = useDashBoardContext()
+  const { setUserCurrentAmount } = useDashBoardContext()
+  const { setUserBetsContext, userBetsContext } = useCapitalGainChartContext()
   const ref = useRef<HTMLFormElement>(null)
-  // const [amount, setAmount] = useState<string | number>("")
-  // const [odd, setOdd] = useState<string | number>("")
 
   async function handleSubmit(formData: FormData) {
-    // const currentAmount =
-    //   currentAmountFromDatabase - Number(formData.get("amount"))
-    // setUserCurrentAmount(currentAmount)
+    const currentAmount =
+      currentAmountFromDatabase - Number(formData.get("amount"))
+    setUserCurrentAmount(currentAmount)
 
-    // await enterBetInDatabase(
-    //     Number(formData.get("amount")),
-    //     Number(formData.get("odd"))
-    //   )
+    const userBets = await fetchUserBets()
+    setUserBetsContext([
+      ...userBets,
+      {
+        amount: Number(formData.get("amount")),
+        odd: Number(formData.get("odd")),
+        status: "Pending",
+      },
+    ])
+
+    await enterBetInDatabase(
+      Number(formData.get("amount")),
+      Number(formData.get("odd"))
+    )
     ref.current?.reset()
   }
 

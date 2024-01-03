@@ -47,14 +47,14 @@ export const PaginationControls = ({
     <Pagination className='m-6 absolute bottom-3'>
       <PaginationContent>
         <PaginationPrevious
-          className={clsx({ hidden: !hasPreviousPage }, "cursor-pointer")}
+          className={clsx({ invisible: !hasPreviousPage }, "cursor-pointer")}
           onClick={() =>
             router.push(`?page=${Number(currentPage) - 1}&per_page=${per_page}`)
           }
         />
         {paginationLink}
         <PaginationNext
-          className={clsx({ hidden: !hasNextPage }, "cursor-pointer")}
+          className={clsx({ invisible: !hasNextPage }, "cursor-pointer")}
           onClick={() =>
             router.push(`?page=${Number(currentPage) + 1}&per_page=${per_page}`)
           }

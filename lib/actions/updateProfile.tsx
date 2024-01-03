@@ -95,3 +95,19 @@ export const updateBetStatusInDatabase = async (
     },
   })
 }
+
+export const fetchUserBets = async () => {
+  const session = await getAuthSession()
+
+  const userBets = await prisma.bets.findMany({
+    where: {
+      userId: session?.user.id,
+    },
+    select: {
+      amount: true,
+      odd: true,
+      status: true,
+    },
+  })
+  return userBets
+}

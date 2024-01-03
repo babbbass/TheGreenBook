@@ -3,6 +3,7 @@ import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { Bet } from "@/components/Bet"
 import { PaginationControls } from "@/components/pagination/paginationControls"
+import { fetchUserBets } from "@/lib/actions/updateProfile"
 
 type SearchParams = {
   searchParams: {
