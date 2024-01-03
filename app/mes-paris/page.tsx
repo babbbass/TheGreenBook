@@ -3,7 +3,6 @@ import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { Bet } from "@/components/Bet"
 import { PaginationControls } from "@/components/pagination/paginationControls"
-import { fetchUserBets } from "@/lib/actions/updateProfile"
 
 type SearchParams = {
   searchParams: {
@@ -30,9 +29,9 @@ const Bets = async ({ searchParams }: SearchParams) => {
   const myBetsPaginated = myBets.slice(start, end)
 
   return (
-    <Card className='relative flex flex-col items-center my-6 p-2 h-[560px]'>
+    <Card className='relative flex flex-col items-center my-6 p-2 max-h-[560px]'>
       <CardHeader className='font-bold text-lg'>
-        <h1 className='text-2xl'>Mes paris</h1>
+        <h1 className='text-2xl text-greenbook'>Mes paris</h1>
       </CardHeader>
       <CardContent className='flex flex-col items-center'>
         {myBets.length === 0 && (

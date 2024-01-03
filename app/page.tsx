@@ -39,12 +39,16 @@ export default async function Home() {
     },
   })
 
-  const startAmount = Number(user?.profile?.startAmount)
-  const currentAmount = Number(user?.profile?.currentAmount)
+  const startAmount = user?.profile?.startAmount
+    ? Number(user.profile.startAmount)
+    : 0
+  const currentAmount = user?.profile?.currentAmount
+    ? Number(user.profile.currentAmount)
+    : 0
 
   return (
     <>
-      <Card className='flex flex-col md:flex-row bg-background border-none p-2 gap-4 mb-4'>
+      <Card className='flex flex-col justify-evenly md:flex-row bg-background border-none p-2 gap-4 mb-4'>
         <BettingForm currentAmountFromDatabase={currentAmount} />
         <ReturnOnInvestmentForm
           startAmount={startAmount}

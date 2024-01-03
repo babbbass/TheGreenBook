@@ -27,12 +27,12 @@ export const ReturnOnInvestmentForm = ({
     <>
       <Card className='py-4 flex flex-col items-center gap-4'>
         <CardHeader className='w-full flex items-center font-bold text-2xl'>
-          <CardTitle>Montants</CardTitle>
+          <CardTitle className='text-title'>Montants</CardTitle>
         </CardHeader>
         <CardContent>
           <form action={handleSubmit} className='space-y-8'>
             <div className='flex flex-col gap-4'>
-              <Label className='ml-2 font-semibold' htmlFor='amount'>
+              <Label className='ml-2 font-semibold text-title' htmlFor='amount'>
                 Montant demarrage
               </Label>
               <Input
@@ -42,7 +42,7 @@ export const ReturnOnInvestmentForm = ({
               />
             </div>
             <div className='flex flex-col gap-4'>
-              <Label className='ml-2 font-semibold' htmlFor='amount'>
+              <Label className='ml-2 font-semibold text-title' htmlFor='amount'>
                 Montant actuelle
               </Label>
               <Input
@@ -56,7 +56,9 @@ export const ReturnOnInvestmentForm = ({
               />
             </div>
             <div className='flex flex-row-reverse w-full'>
-              <Button type='submit'>Mon ROI</Button>
+              <Button type='submit' className='hover:text-primary-foreground'>
+                Mon ROI
+              </Button>
             </div>
           </form>
         </CardContent>

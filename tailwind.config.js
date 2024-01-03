@@ -19,6 +19,7 @@ module.exports = {
       colors: {
         texthover: "#218358",
         title: "#218358",
+        greenbook: "#193B2D",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

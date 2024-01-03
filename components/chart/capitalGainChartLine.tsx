@@ -44,9 +44,9 @@ export const CapitalGainChartLine = ({
   })
 
   return (
-    <Card className='flex flex-col items-center p-2 bg-slate-50'>
+    <Card className='flex flex-col items-center p-2 bg-primary'>
       <CardHeader className='w-full flex items-center font-bold text-2xl'>
-        <CardTitle>Capital Gain Chart</CardTitle>
+        <CardTitle className='text-title'> Graphique des gains</CardTitle>
       </CardHeader>
       <LineChart
         width={450}

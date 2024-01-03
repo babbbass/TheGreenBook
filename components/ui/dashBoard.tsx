@@ -36,18 +36,18 @@ export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
     <>
       <Card className='py-4 flex flex-col items-center gap-4'>
         <CardHeader className='w-full flex items-center font-bold text-2xl'>
-          <CardTitle>Benefices</CardTitle>
+          <CardTitle className='text-title'>Benefices</CardTitle>
         </CardHeader>
         <CardContent>
           <form className='space-y-8'>
             <div className='flex flex-col gap-4'>
-              <Label className='ml-2 font-semibold'>Mon ROI</Label>
+              <Label className='ml-2 font-semibold text-title'>Mon ROI</Label>
               <Badge className='h-10 flex items-center justify-center'>
                 {returnOnInvestment}
               </Badge>
             </div>
             <div className='flex flex-col gap-4'>
-              <Label className='ml-2 font-semibold'>% de gain</Label>
+              <Label className='ml-2 font-semibold text-title'>% de gain</Label>
               <Badge className='h-10 flex items-center justify-center'>
                 {percentageOnInvestment}
               </Badge>

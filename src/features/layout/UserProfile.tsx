@@ -27,7 +27,9 @@ export const UserProfile = async () => {
               {session?.user.name ? session?.user.name[0].toUpperCase() : "G"}
             </AvatarFallback>
           </Avatar>
-          {session?.user.name ?? ""}
+          <span className='text-title font-bold text-sm'>
+            {session?.user.name ?? ""}
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
