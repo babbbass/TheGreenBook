@@ -6,7 +6,9 @@ import { Label } from "../ui/label"
 import { enterBetInDatabase, fetchUserBets } from "@/lib/actions/updateProfile"
 import { useDashBoardContext } from "@/context/dashboardContext"
 import { useCapitalGainChartContext } from "@/context/capitalGainChartContext"
-import { useRef } from "react"
+import { useRef, useTransition } from "react"
+import { Loader } from "@/components/ui/loader"
+
 type BettingFormData = {
   currentAmountFromDatabase: number
 }
@@ -14,8 +16,10 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
   const { setUserCurrentAmount } = useDashBoardContext()
   const { setUserBetsContext, userBetsContext } = useCapitalGainChartContext()
   const ref = useRef<HTMLFormElement>(null)
+  const [isPending, startTransition] = useTransition()
 
   async function handleSubmit(formData: FormData) {
+    console.log("open modal", formData)
     const currentAmount =
       currentAmountFromDatabase - Number(formData.get("amount"))
     setUserCurrentAmount(currentAmount)
@@ -34,16 +38,21 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
       Number(formData.get("amount")),
       Number(formData.get("odd"))
     )
+    console.log("close modal")
     ref.current?.reset()
   }
 
   return (
     <Card className='py-4 flex flex-col items-center gap-4'>
       <CardHeader className='w-full flex items-center font-bold text-2xl'>
-        <CardTitle className='text-title'> Mon pari</CardTitle>
+        <CardTitle className='text-title'>Nouveau pari</CardTitle>
       </CardHeader>
       <CardContent>
-        <form ref={ref} action={handleSubmit} className='space-y-8'>
+        <form
+          ref={ref}
+          action={(ref) => startTransition(() => handleSubmit(ref))}
+          className='space-y-8'
+        >
           <div className='flex flex-col gap-4'>
             <Label className='ml-2 font-semibold text-title' htmlFor='amount'>
               Montant
@@ -61,7 +70,7 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
               type='submit'
               className='text-base hover:text-primary-foreground'
             >
-              Parier
+              {isPending ? <Loader className='mr-2 h-4 w-4' /> : ""} Parier
             </Button>
           </div>
         </form>
