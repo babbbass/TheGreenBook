@@ -53,16 +53,30 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
           className='space-y-8'
         >
           <div className='flex flex-col gap-4'>
-            <Label className='m-auto font-semibold text-title' htmlFor='amount'>
+            <Label
+              className='m-auto font-semibold text-title text-lg'
+              htmlFor='amount'
+            >
               Montant
             </Label>
-            <Input placeholder='0' name='amount' className='text-center' />
+            <Input
+              placeholder='0'
+              name='amount'
+              className='text-center text-lg font-bold'
+            />
           </div>
           <div className='flex flex-col gap-4'>
-            <Label className='m-auto font-semibold text-title' htmlFor='odd'>
+            <Label
+              className='m-auto font-semibold text-title text-lg'
+              htmlFor='odd'
+            >
               Côte
             </Label>
-            <Input placeholder='0' name='odd' className='text-center' />
+            <Input
+              placeholder='0'
+              name='odd'
+              className='text-center text-lg font-bold'
+            />
           </div>
           <div className='w-full flex flex-row-reverse'>
             <Button

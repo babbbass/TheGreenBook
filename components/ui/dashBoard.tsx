@@ -8,6 +8,7 @@ import {
 import { Label } from "@/components/ui/label"
 import { Badge } from "@/components/ui/badge"
 import { useDashBoardContext } from "@/context/dashboardContext"
+import clsx from "clsx"
 
 type DashBoard = {
   currentAmount: number
@@ -40,16 +41,32 @@ export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
         </CardHeader>
         <CardContent>
           <form className='space-y-8'>
-            <div className='flex flex-col gap-4'>
-              <Label className='ml-2 font-semibold text-title'>Mon ROI</Label>
-              <Badge className='h-10 flex items-center justify-center'>
-                {returnOnInvestment}
+            <div className='flex items-center flex-col gap-4'>
+              <Label className='ml-2 font-semibold text-title text-xl'>
+                Mon ROI
+              </Label>
+              <Badge
+                className={clsx(
+                  { "bg-orange-600": percentageOnInvestment < 0 },
+                  { "bg-red-600": percentageOnInvestment < -50 },
+                  `h-20 w-20 flex items-center justify-center rounded-full`
+                )}
+              >
+                <span className='text-xl'>{returnOnInvestment}%</span>
               </Badge>
             </div>
-            <div className='flex flex-col gap-4'>
-              <Label className='ml-2 font-semibold text-title'>% de gain</Label>
-              <Badge className='h-10 flex items-center justify-center'>
-                {percentageOnInvestment}
+            <div className='flex items-center flex-col gap-4'>
+              <Label className='ml-2 font-semibold text-title text-xl'>
+                % de gain
+              </Label>
+              <Badge
+                className={clsx(
+                  { "bg-orange-600": percentageOnInvestment < 0 },
+                  { "bg-red-600": percentageOnInvestment < -50 },
+                  `h-20 w-20 flex items-center justify-center rounded-full`
+                )}
+              >
+                <span className='text-xl'>{percentageOnInvestment}%</span>
               </Badge>
             </div>
           </form>

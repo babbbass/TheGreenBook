@@ -30,7 +30,7 @@ export const ReturnOnInvestmentForm = ({
 
   return (
     <>
-      <Card className='py-4 flex flex-col items-center gap-4 sm:mb-4 sm:flex-row md:w-3/4'>
+      <Card className='py-4 mx-2 w-full flex flex-col items-center gap-4 sm:mb-4 sm:flex-row md:w-3/4'>
         <CardHeader className='font-bold text-2xl'>
           <CardTitle className='text-title'>Montants</CardTitle>
         </CardHeader>
@@ -42,7 +42,7 @@ export const ReturnOnInvestmentForm = ({
             <div className='flex flex-col items-stretch w-5/6 gap-8 sm:flex-row'>
               <div className='flex flex-col gap-4'>
                 <Label
-                  className='m-auto font-semibold text-title'
+                  className='m-auto font-semibold text-title text-lg'
                   htmlFor='amount'
                 >
                   demarrage
@@ -60,7 +60,7 @@ export const ReturnOnInvestmentForm = ({
               </div>
               <div className='flex flex-col gap-4'>
                 <Label
-                  className='m-auto font-semibold text-title'
+                  className='m-auto font-semibold text-title text-lg'
                   htmlFor='amount'
                 >
                   actuel

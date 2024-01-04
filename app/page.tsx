@@ -49,7 +49,7 @@ export default async function Home() {
 
   return (
     <>
-      <div className='flex justify-center'>
+      <div className='flex justify-center w-full'>
         <ReturnOnInvestmentForm
           startAmount={startAmount}
           currentAmountFromDatabase={currentAmount}
