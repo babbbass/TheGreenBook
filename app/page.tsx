@@ -49,10 +49,12 @@ export default async function Home() {
 
   return (
     <>
-      <ReturnOnInvestmentForm
-        startAmount={startAmount}
-        currentAmountFromDatabase={currentAmount}
-      />
+      <div className='flex justify-center'>
+        <ReturnOnInvestmentForm
+          startAmount={startAmount}
+          currentAmountFromDatabase={currentAmount}
+        />
+      </div>
       <Card className='flex flex-col justify-evenly md:flex-row bg-background border-none p-2 gap-4 mb-4'>
         <BettingForm currentAmountFromDatabase={currentAmount} />
         <DashBoard currentAmount={currentAmount} startAmount={startAmount} />

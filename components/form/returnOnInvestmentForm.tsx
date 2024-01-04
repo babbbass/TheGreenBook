@@ -5,6 +5,8 @@ import { Label } from "../ui/label"
 import { updateProfileUser } from "@/lib/actions/updateProfile"
 import { Card, CardHeader, CardContent, CardTitle } from "../ui/card"
 import { useDashBoardContext } from "@/context/dashboardContext"
+import { useState } from "react"
+import { Wrench } from "lucide-react"
 
 export type Amounts = {
   startAmount: number
@@ -15,7 +17,10 @@ export const ReturnOnInvestmentForm = ({
   currentAmountFromDatabase,
 }: Amounts) => {
   const { userCurrentAmount, setUserCurrentAmount } = useDashBoardContext()
+  const [modifying, setModifying] = useState(false)
+  if (startAmount === 0) setModifying(true)
   async function handleSubmit(formData: FormData) {
+    if (!modifying) return
     const startAmount = Number(formData.get("startAmount"))
     const currentAmount = Number(formData.get("currentAmount"))
 
@@ -25,7 +30,7 @@ export const ReturnOnInvestmentForm = ({
 
   return (
     <>
-      <Card className='py-4 flex flex-col items-center gap-4 sm:mb-4 sm:flex-row'>
+      <Card className='py-4 flex flex-col items-center gap-4 sm:mb-4 sm:flex-row md:w-3/4'>
         <CardHeader className='font-bold text-2xl'>
           <CardTitle className='text-title'>Montants</CardTitle>
         </CardHeader>
@@ -40,13 +45,17 @@ export const ReturnOnInvestmentForm = ({
                   className='m-auto font-semibold text-title'
                   htmlFor='amount'
                 >
-                  Montant demarrage
+                  demarrage
                 </Label>
                 <Input
+                  type='number'
                   name='startAmount'
+                  min={0}
+                  max={1000000}
                   placeholder={`${startAmount}`}
                   defaultValue={startAmount}
-                  className='text-center'
+                  className='text-center text-lg font-bold'
+                  readOnly={!modifying}
                 />
               </div>
               <div className='flex flex-col gap-4'>
@@ -54,9 +63,13 @@ export const ReturnOnInvestmentForm = ({
                   className='m-auto font-semibold text-title'
                   htmlFor='amount'
                 >
-                  Montant actuelle
+                  actuel
                 </Label>
                 <Input
+                  readOnly={!modifying}
+                  type='number'
+                  min={0}
+                  max={1000000}
                   name='currentAmount'
                   placeholder={`${
                     userCurrentAmount > 0
@@ -68,12 +81,21 @@ export const ReturnOnInvestmentForm = ({
                       ? userCurrentAmount
                       : currentAmountFromDatabase
                   }
-                  className='text-center'
+                  className='text-center text-lg font-bold'
                 />
               </div>
             </div>
-            <div className='flex items-end flex-row-reverse'>
-              <Button type='submit' className='hover:text-primary-foreground'>
+            <div className='flex items-end flex-row-reverse gap-2'>
+              <div
+                className='flex items-center justify-center w-8 h-8 rounded-full'
+                onClick={() => setModifying(!modifying)}
+              >
+                <Wrench size={20} className='text-title' />
+              </div>
+              <Button
+                type='submit'
+                className='hover:text-primary-foreground font-bold'
+              >
                 Mon ROI
               </Button>
             </div>
