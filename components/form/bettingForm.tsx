@@ -14,12 +14,11 @@ type BettingFormData = {
 }
 export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
   const { setUserCurrentAmount } = useDashBoardContext()
-  const { setUserBetsContext, userBetsContext } = useCapitalGainChartContext()
+  const { setUserBetsContext } = useCapitalGainChartContext()
   const ref = useRef<HTMLFormElement>(null)
   const [isPending, startTransition] = useTransition()
 
   async function handleSubmit(formData: FormData) {
-    console.log("open modal", formData)
     const currentAmount =
       currentAmountFromDatabase - Number(formData.get("amount"))
     setUserCurrentAmount(currentAmount)
@@ -38,7 +37,7 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
       Number(formData.get("amount")),
       Number(formData.get("odd"))
     )
-    console.log("close modal")
+
     ref.current?.reset()
   }
 
@@ -54,16 +53,16 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
           className='space-y-8'
         >
           <div className='flex flex-col gap-4'>
-            <Label className='ml-2 font-semibold text-title' htmlFor='amount'>
+            <Label className='m-auto font-semibold text-title' htmlFor='amount'>
               Montant
             </Label>
-            <Input placeholder='0' name='amount' />
+            <Input placeholder='0' name='amount' className='text-center' />
           </div>
           <div className='flex flex-col gap-4'>
-            <Label className='ml-2 font-semibold text-title' htmlFor='odd'>
+            <Label className='m-auto font-semibold text-title' htmlFor='odd'>
               Côte
             </Label>
-            <Input placeholder='0' name='odd' />
+            <Input placeholder='0' name='odd' className='text-center' />
           </div>
           <div className='w-full flex flex-row-reverse'>
             <Button
