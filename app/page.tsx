@@ -49,12 +49,12 @@ export default async function Home() {
 
   return (
     <>
-      <div className='flex justify-center w-full'>
+      <Card className='flex justify-center w-full p-2 border-none bg-background'>
         <ReturnOnInvestmentForm
           startAmount={startAmount}
           currentAmountFromDatabase={currentAmount}
         />
-      </div>
+      </Card>
       <Card className='flex flex-col justify-evenly md:flex-row bg-background border-none p-2 gap-4 mb-4'>
         <BettingForm currentAmountFromDatabase={currentAmount} />
         <DashBoard currentAmount={currentAmount} startAmount={startAmount} />

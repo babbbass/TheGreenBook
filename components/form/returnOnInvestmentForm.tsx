@@ -18,19 +18,17 @@ export const ReturnOnInvestmentForm = ({
 }: Amounts) => {
   const { userCurrentAmount, setUserCurrentAmount } = useDashBoardContext()
   const [modifying, setModifying] = useState(false)
-  if (startAmount === 0) setModifying(true)
   async function handleSubmit(formData: FormData) {
     if (!modifying) return
     const startAmount = Number(formData.get("startAmount"))
     const currentAmount = Number(formData.get("currentAmount"))
-
     setUserCurrentAmount(currentAmount)
     await updateProfileUser(startAmount, currentAmount)
   }
 
   return (
     <>
-      <Card className='py-4 mx-2 w-full flex flex-col items-center gap-4 sm:mb-4 sm:flex-row md:w-3/4'>
+      <Card className='py-4 w-full flex flex-col items-center gap-4 sm:mb-4 sm:flex-row md:w-3/4'>
         <CardHeader className='font-bold text-2xl'>
           <CardTitle className='text-title'>Montants</CardTitle>
         </CardHeader>

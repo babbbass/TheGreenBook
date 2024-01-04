@@ -37,9 +37,9 @@ export const UserProfile = async () => {
           asChild
           className='cursor-pointer hover:text-texthover hover:font-bold'
         >
-          <Link href='/profile'>
+          {/* <Link href=''>
             <User2 className='mr-2 h-4 w-4s' /> Profile
-          </Link>
+          </Link> */}
         </DropdownMenuItem>
         <DropdownMenuItem
           asChild

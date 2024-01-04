@@ -22,7 +22,7 @@ const status = [STATUSLOST, STATUSWIN]
 export const WinningBetButton = ({ bet, betStatus, updateStatus }: Bet) => {
   return (
     <Button
-      className={clsx("bg-white cursor-pointer", {
+      className={clsx("bg-white cursor-pointer w-12 sm:w-14", {
         "opacity-20": betStatus === STATUSLOST,
         "cursor-not-allowed  bg-gray-200": status.includes(betStatus),
       })}

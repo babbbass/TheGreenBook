@@ -3,6 +3,7 @@ import { WinningBetButton } from "@/components/button/winningBetButton"
 import { LosingBetButton } from "@/components/button/losingBetButton"
 import { useState } from "react"
 import { clsx } from "clsx"
+import { Card } from "./ui/card"
 
 const formatDate = (date: Date) => {
   const day = date.getDate().toString().padStart(2, "0")
@@ -26,13 +27,13 @@ type Bet = {
 export const Bet = ({ bet }: Bet) => {
   const [betStatus, setBetStatus] = useState(bet.status)
   return (
-    <div
+    <Card
       className={clsx(
         {
           "border-red-500": betStatus === "Lost",
           "border-title": betStatus === "Won",
         },
-        "border-2 mb-2 p-2 flex gap-2 items-center rounded-lg w-1/1"
+        "border-2 mb-2 p-2 flex gap-2 items-center rounded-lg text-sm min-[500px]:text-base"
       )}
     >
       <div className={"flex flex-col items-center justify-center px-2"}>
@@ -54,11 +55,11 @@ export const Bet = ({ bet }: Bet) => {
           {betStatus}
         </span>
       </div>
-      <div className='flex flex-col items-center'>
+      <div className='hidden min-[420px]:flex flex-col items-center '>
         <span className='font-bold'>Date</span>
         <span>{formatDate(bet.createdAt)}</span>
       </div>
-      <div className='flex gap-4 items-center'>
+      <div className='flex gap-2 items-center'>
         <WinningBetButton
           bet={bet}
           betStatus={betStatus}
@@ -70,6 +71,6 @@ export const Bet = ({ bet }: Bet) => {
           updateStatus={setBetStatus}
         />
       </div>
-    </div>
+    </Card>
   )
 }

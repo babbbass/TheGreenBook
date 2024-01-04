@@ -44,7 +44,7 @@ export const PaginationControls = ({
   }
 
   return (
-    <Pagination className='m-6 absolute bottom-3'>
+    <Pagination className='m-6 absolute bottom-0'>
       <PaginationContent>
         <PaginationPrevious
           className={clsx({ invisible: !hasPreviousPage }, "cursor-pointer")}

@@ -29,7 +29,7 @@ const Bets = async ({ searchParams }: SearchParams) => {
   const myBetsPaginated = myBets.slice(start, end)
 
   return (
-    <Card className='relative flex flex-col items-center my-6 p-2 max-h-[560px]'>
+    <Card className='relative flex flex-col items-center justify-items-center my-6 mx-auto max-w-xl p-2 h-[550px]'>
       <CardHeader className='font-bold text-lg'>
         <h1 className='text-2xl text-greenbook'>Mes paris</h1>
       </CardHeader>
