@@ -2,7 +2,9 @@
 import { Button } from "@/components/ui/button"
 import { BadgeCheck } from "lucide-react"
 import { updateBetStatusInDatabase } from "@/lib/actions/updateProfile"
+import { useTransition } from "react"
 import clsx from "clsx"
+import { Loader } from "lucide-react"
 
 export const STATUSLOST = "Lost"
 export const STATUSWIN = "Won"
@@ -20,6 +22,7 @@ const updateBetStatus = async (bet: { id: string; userId: string }) => {
 
 const status = [STATUSLOST, STATUSWIN]
 export const WinningBetButton = ({ bet, betStatus, updateStatus }: Bet) => {
+  const [isPending, startTransition] = useTransition()
   return (
     <Button
       className={clsx("bg-white cursor-pointer w-12 sm:w-14", {
@@ -30,11 +33,17 @@ export const WinningBetButton = ({ bet, betStatus, updateStatus }: Bet) => {
         if (status.includes(betStatus)) {
           return
         }
-        updateStatus(STATUSWIN)
-        updateBetStatus(bet)
+        startTransition(() => {
+          updateStatus(STATUSWIN)
+          updateBetStatus(bet)
+        })
       }}
     >
-      <BadgeCheck className='text-title' />
+      {isPending ? (
+        <Loader className='mr-2 h-4 w-4' />
+      ) : (
+        <BadgeCheck className='text-title' />
+      )}
     </Button>
   )
 }
