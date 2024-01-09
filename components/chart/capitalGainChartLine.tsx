@@ -44,9 +44,9 @@ export const CapitalGainChartLine = ({
   })
 
   return (
-    <Card className='flex flex-col items-center p-2 bg-primary'>
+    <Card className='flex flex-col items-center p-2'>
       <CardHeader className='w-full flex items-center font-bold text-2xl'>
-        <CardTitle className='text-title'> Graphique des gains</CardTitle>
+        <CardTitle className='italic'>Votre Courbe</CardTitle>
       </CardHeader>
       <LineChart
         width={450}
@@ -62,7 +62,7 @@ export const CapitalGainChartLine = ({
         <Line
           type='monotone'
           dataKey='amount'
-          stroke='#218358'
+          stroke='#193B2D'
           //activeDot={{ r: 8 }}
         />
         <XAxis dataKey='name' />

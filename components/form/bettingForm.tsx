@@ -44,7 +44,7 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
   return (
     <Card className='py-4 flex flex-col items-center gap-4'>
       <CardHeader className='w-full flex items-center font-bold text-2xl'>
-        <CardTitle className='text-title'>Nouveau pari</CardTitle>
+        <CardTitle>Nouveau pari</CardTitle>
       </CardHeader>
       <CardContent>
         <form
@@ -53,10 +53,7 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
           className='space-y-8'
         >
           <div className='flex flex-col gap-4'>
-            <Label
-              className='m-auto font-semibold text-title text-lg'
-              htmlFor='amount'
-            >
+            <Label className='m-auto font-semibold  text-lg' htmlFor='amount'>
               Montant
             </Label>
             <Input
@@ -66,10 +63,7 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
             />
           </div>
           <div className='flex flex-col gap-4'>
-            <Label
-              className='m-auto font-semibold text-title text-lg'
-              htmlFor='odd'
-            >
+            <Label className='m-auto font-semibold  text-lg' htmlFor='odd'>
               Côte
             </Label>
             <Input

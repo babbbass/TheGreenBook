@@ -37,14 +37,14 @@ export default function RootLayout({
           lato.className,
           roboto.className,
           inter.className,
-          "bg-background h-full"
+          "bg-background"
         )}
       >
         <DashBoardWrapper>
-          <div className='flex flex-col h-full py-4 px-2'>
+          <div className='flex flex-col h-screen py-4 px-2'>
             <Header />
             <CapitalGainChartWrapper>
-              <div className='flex-1 justify-center items-center max-w-4xl m-auto py-12 w-full'>
+              <div className='flex-1  max-w-4xl m-auto py-12 w-full'>
                 {children}
               </div>
             </CapitalGainChartWrapper>

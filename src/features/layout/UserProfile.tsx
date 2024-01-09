@@ -18,7 +18,7 @@ export const UserProfile = async () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className='gap-2' size='sm' variant='outline'>
+        <Button className='gap-2 hover:text-slate-50' size='sm'>
           <Avatar className='h-6 w-6'>
             {session?.user.image && (
               <AvatarImage src={session.user.image} alt='avatar' />
@@ -27,16 +27,11 @@ export const UserProfile = async () => {
               {session?.user.name ? session?.user.name[0].toUpperCase() : "G"}
             </AvatarFallback>
           </Avatar>
-          <span className='text-title font-bold text-sm'>
-            {session?.user.name ?? ""}
-          </span>
+          <span className='text-sm'>{session?.user.name ?? ""}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem
-          asChild
-          className='cursor-pointer hover:text-texthover hover:font-bold'
-        >
+        <DropdownMenuItem asChild className='cursor-pointer hover:font-bold'>
           {/* <Link href=''>
             <User2 className='mr-2 h-4 w-4s' /> Profile
           </Link> */}

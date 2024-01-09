@@ -5,13 +5,16 @@ import { prisma } from "@/lib/prisma"
 import { CapitalGainChartLine } from "@/components/chart/capitalGainChartLine"
 import { Card } from "@/components/ui/card"
 import { DashBoard } from "@/components/ui/dashBoard"
+import { LoginButton } from "@/src/features/layout/LoginButton"
 
 export default async function Home() {
   const session = await getAuthSession()
 
   if (!session) {
     return (
-      <ReturnOnInvestmentForm startAmount={0} currentAmountFromDatabase={0} />
+      <div className='flex justify-center items-center h-full'>
+        <LoginButton />
+      </div>
     )
   }
 

@@ -30,7 +30,7 @@ export const ReturnOnInvestmentForm = ({
     <>
       <Card className='py-4 w-full flex flex-col items-center gap-4 sm:mb-4 sm:flex-row md:w-3/4'>
         <CardHeader className='font-bold text-2xl'>
-          <CardTitle className='text-title'>Montants</CardTitle>
+          <CardTitle>Montants</CardTitle>
         </CardHeader>
         <CardContent className='w-full'>
           <form
@@ -40,7 +40,7 @@ export const ReturnOnInvestmentForm = ({
             <div className='flex flex-col items-stretch w-5/6 gap-8 sm:flex-row'>
               <div className='flex flex-col gap-4'>
                 <Label
-                  className='m-auto font-semibold text-title text-lg'
+                  className='m-auto font-semibold text-lg'
                   htmlFor='amount'
                 >
                   demarrage
@@ -52,13 +52,13 @@ export const ReturnOnInvestmentForm = ({
                   max={1000000}
                   placeholder={`${startAmount}`}
                   defaultValue={startAmount}
-                  className='text-center text-lg font-bold'
+                  className='text-center text-lg'
                   readOnly={!modifying}
                 />
               </div>
               <div className='flex flex-col gap-4'>
                 <Label
-                  className='m-auto font-semibold text-title text-lg'
+                  className='m-auto font-semibold text-lg'
                   htmlFor='amount'
                 >
                   actuel
@@ -79,7 +79,7 @@ export const ReturnOnInvestmentForm = ({
                       ? userCurrentAmount
                       : currentAmountFromDatabase
                   }
-                  className='text-center text-lg font-bold'
+                  className='text-center text-lg'
                 />
               </div>
             </div>
@@ -88,7 +88,7 @@ export const ReturnOnInvestmentForm = ({
                 className='flex items-center justify-center w-8 h-8 rounded-full'
                 onClick={() => setModifying(!modifying)}
               >
-                <Wrench size={20} className='text-title' />
+                <Wrench size={20} />
               </div>
               <Button
                 type='submit'

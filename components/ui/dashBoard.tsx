@@ -37,14 +37,12 @@ export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
     <>
       <Card className='py-4 flex flex-col items-center gap-4'>
         <CardHeader className='w-full flex items-center font-bold text-2xl'>
-          <CardTitle className='text-title'>Benefices</CardTitle>
+          <CardTitle>Benefices</CardTitle>
         </CardHeader>
         <CardContent>
           <form className='space-y-8'>
             <div className='flex items-center flex-col gap-4'>
-              <Label className='ml-2 font-semibold text-title text-xl'>
-                Mon ROI
-              </Label>
+              <Label className='ml-2 font-semibold text-xl'>Mon ROI</Label>
               <Badge
                 className={clsx(
                   { "bg-orange-600": percentageOnInvestment < 0 },
@@ -56,9 +54,7 @@ export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
               </Badge>
             </div>
             <div className='flex items-center flex-col gap-4'>
-              <Label className='ml-2 font-semibold text-title text-xl'>
-                % de gain
-              </Label>
+              <Label className='ml-2 font-semibold text-xl'>% de gain</Label>
               <Badge
                 className={clsx(
                   { "bg-orange-600": percentageOnInvestment < 0 },
