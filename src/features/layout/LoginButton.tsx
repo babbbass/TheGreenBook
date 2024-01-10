@@ -9,7 +9,10 @@ import React, { useTransition } from "react"
 export const LoginButton = () => {
   const [isPending, startTransition] = useTransition()
   return (
-    <Button onClick={() => startTransition(() => signIn())}>
+    <Button
+      className='cursor-pointer hover:text-slate-50 hover:font-bold'
+      onClick={() => startTransition(() => signIn())}
+    >
       {isPending ? (
         <Loader className='mr-2 h-4 w-4' />
       ) : (

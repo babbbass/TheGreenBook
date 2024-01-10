@@ -7,6 +7,7 @@ import { Card, CardHeader, CardContent, CardTitle } from "../ui/card"
 import { useDashBoardContext } from "@/context/dashboardContext"
 import { useState } from "react"
 import { Wrench } from "lucide-react"
+import { WrenchButton } from "../button/wrenchButton"
 
 export type Amounts = {
   startAmount: number
@@ -16,8 +17,9 @@ export const ReturnOnInvestmentForm = ({
   startAmount,
   currentAmountFromDatabase,
 }: Amounts) => {
-  const { userCurrentAmount, setUserCurrentAmount } = useDashBoardContext()
   const [modifying, setModifying] = useState(false)
+  const { userCurrentAmount, setUserCurrentAmount } = useDashBoardContext()
+
   async function handleSubmit(formData: FormData) {
     if (!modifying) return
     const startAmount = Number(formData.get("startAmount"))
@@ -46,7 +48,7 @@ export const ReturnOnInvestmentForm = ({
                   demarrage
                 </Label>
                 <Input
-                  type='number'
+                  type='numeric'
                   name='startAmount'
                   min={0}
                   max={1000000}
@@ -65,7 +67,7 @@ export const ReturnOnInvestmentForm = ({
                 </Label>
                 <Input
                   readOnly={!modifying}
-                  type='number'
+                  type='numeric'
                   min={0}
                   max={1000000}
                   name='currentAmount'
@@ -84,12 +86,7 @@ export const ReturnOnInvestmentForm = ({
               </div>
             </div>
             <div className='flex items-end flex-row-reverse gap-2'>
-              <div
-                className='flex items-center justify-center w-8 h-8 rounded-full'
-                onClick={() => setModifying(!modifying)}
-              >
-                <Wrench size={20} />
-              </div>
+              <WrenchButton modifying={modifying} setModifying={setModifying} />
               <Button
                 type='submit'
                 className='hover:text-primary-foreground font-bold'
