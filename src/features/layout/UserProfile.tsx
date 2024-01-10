@@ -31,10 +31,13 @@ export const UserProfile = async () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuItem asChild className='cursor-pointer hover:font-bold'>
-          {/* <Link href=''>
-            <User2 className='mr-2 h-4 w-4s' /> Profile
-          </Link> */}
+        <DropdownMenuItem
+          asChild
+          className='cursor-pointer hover:text-texthover hover:font-bold'
+        >
+          <Link href='/profil'>
+            <User2 className='mr-2 h-4 w-4s ' /> Mon profil
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem
           asChild
