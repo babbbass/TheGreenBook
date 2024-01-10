@@ -6,6 +6,7 @@ import { env } from "@/lib/env"
 import { AuthOptions, getServerSession } from "next-auth"
 
 export const authOptions: AuthOptions = {
+  secret: env.NEXTAUTH_SECRET,
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
