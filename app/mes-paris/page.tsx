@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { Bet } from "@/components/Bet"
@@ -31,7 +31,7 @@ const Bets = async ({ searchParams }: SearchParams) => {
   return (
     <Card className='relative flex flex-col items-center justify-items-center my-6 mx-auto max-w-xl p-2 h-[550px]'>
       <CardHeader className='font-bold text-lg'>
-        <h1 className='text-2xl text-greenbook'>Mes paris</h1>
+        <CardTitle className='text-2xl'>Mes paris</CardTitle>
       </CardHeader>
       <CardContent className='flex flex-col items-center'>
         {myBets.length === 0 && (
