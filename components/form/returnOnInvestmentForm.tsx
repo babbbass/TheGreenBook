@@ -5,9 +5,9 @@ import { Label } from "../ui/label"
 import { updateProfileUser } from "@/lib/actions/updateProfile"
 import { Card, CardHeader, CardContent, CardTitle } from "../ui/card"
 import { useDashBoardContext } from "@/context/dashboardContext"
-import { useState } from "react"
-import { Wrench } from "lucide-react"
+import { useState, useTransition, useRef } from "react"
 import { WrenchButton } from "../button/wrenchButton"
+import { Loader } from "lucide-react"
 
 export type Amounts = {
   startAmount: number
@@ -19,6 +19,8 @@ export const ReturnOnInvestmentForm = ({
 }: Amounts) => {
   const [modifying, setModifying] = useState(false)
   const { userCurrentAmount, setUserCurrentAmount } = useDashBoardContext()
+  const ref = useRef<HTMLFormElement>(null)
+  const [isPending, startTransition] = useTransition()
 
   async function handleSubmit(formData: FormData) {
     if (!modifying) return
@@ -36,8 +38,9 @@ export const ReturnOnInvestmentForm = ({
         </CardHeader>
         <CardContent className='w-full'>
           <form
-            action={handleSubmit}
-            className='flex flex-col gap-8 sm:flex-row '
+            ref={ref}
+            action={(ref) => startTransition(() => handleSubmit(ref))}
+            className='flex flex-col justify-center gap-8 sm:flex-row'
           >
             <div className='flex flex-col items-stretch w-5/6 gap-8 sm:flex-row'>
               <div className='flex flex-col gap-4'>
@@ -52,7 +55,6 @@ export const ReturnOnInvestmentForm = ({
                   name='startAmount'
                   min={0}
                   max={1000000}
-                  placeholder={`${startAmount}`}
                   defaultValue={startAmount}
                   className='text-center text-lg'
                   readOnly={!modifying}
@@ -71,11 +73,6 @@ export const ReturnOnInvestmentForm = ({
                   min={0}
                   max={1000000}
                   name='currentAmount'
-                  placeholder={`${
-                    userCurrentAmount > 0
-                      ? userCurrentAmount
-                      : currentAmountFromDatabase
-                  }`}
                   defaultValue={
                     userCurrentAmount > 0
                       ? userCurrentAmount
@@ -91,7 +88,7 @@ export const ReturnOnInvestmentForm = ({
                 type='submit'
                 className='hover:text-primary-foreground font-bold'
               >
-                Mon ROI
+                {isPending ? <Loader className='mr-2 h-4 w-4' /> : ""} Mon ROI
               </Button>
             </div>
           </form>

@@ -11,8 +11,12 @@ import { Loader } from "@/components/ui/loader"
 
 type BettingFormData = {
   currentAmountFromDatabase: number
+  startAmount: number
 }
-export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
+export const BettingForm = ({
+  currentAmountFromDatabase,
+  startAmount,
+}: BettingFormData) => {
   const { setUserCurrentAmount } = useDashBoardContext()
   const { setUserBetsContext } = useCapitalGainChartContext()
   const ref = useRef<HTMLFormElement>(null)
@@ -59,7 +63,8 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
             <Input
               placeholder='0'
               name='amount'
-              className='text-center text-lg font-bold'
+              className='text-center text-lg font-bold '
+              readOnly={startAmount <= 0}
             />
           </div>
           <div className='flex flex-col gap-4'>
@@ -70,6 +75,7 @@ export const BettingForm = ({ currentAmountFromDatabase }: BettingFormData) => {
               placeholder='0'
               name='odd'
               className='text-center text-lg font-bold'
+              readOnly={startAmount <= 0}
             />
           </div>
           <div className='w-full flex flex-row-reverse'>

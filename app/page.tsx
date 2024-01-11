@@ -59,7 +59,10 @@ export default async function Home() {
         />
       </Card>
       <Card className='flex flex-col justify-evenly md:flex-row bg-background border-none p-2 gap-4 mb-4'>
-        <BettingForm currentAmountFromDatabase={currentAmount} />
+        <BettingForm
+          currentAmountFromDatabase={currentAmount}
+          startAmount={startAmount}
+        />
         <DashBoard currentAmount={currentAmount} startAmount={startAmount} />
       </Card>
       <CapitalGainChartLine startAmount={startAmount} userBets={userBets} />

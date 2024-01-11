@@ -37,7 +37,7 @@ const Profile = async () => {
     <div className='flex flex-col items-center gap-20 justify-center min-h-full'>
       <Badge
         variant='secondary'
-        className='italic font-bold h-20 w-1/4 flex justify-center text-3xl '
+        className='font-bold h-20 flex justify-center text-3xl '
       >
         Mon Profil
       </Badge>

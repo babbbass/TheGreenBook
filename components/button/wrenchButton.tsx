@@ -1,4 +1,4 @@
-import { Wrench } from "lucide-react"
+import { Ban, Pencil } from "lucide-react"
 
 export const WrenchButton = ({
   modifying,
@@ -12,7 +12,11 @@ export const WrenchButton = ({
       className='flex items-center justify-center w-8 h-8 rounded-full cursor-pointer'
       onClick={() => setModifying(!modifying)}
     >
-      <Wrench size={20} />
+      {modifying ? (
+        <Pencil size={20} className='text-red-700' />
+      ) : (
+        <Ban size={20} />
+      )}
     </div>
   )
 }
