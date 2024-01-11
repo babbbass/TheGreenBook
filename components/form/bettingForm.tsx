@@ -1,13 +1,18 @@
 "use client"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
-import { Label } from "../ui/label"
+import { Label } from "@/components/ui/label"
 import { enterBetInDatabase, fetchUserBets } from "@/lib/actions/updateProfile"
-import { useDashBoardContext } from "@/context/dashboardContext"
+//import { useDashBoardContext } from "@/context/dashboardContext"
 import { useCapitalGainChartContext } from "@/context/capitalGainChartContext"
 import { useRef, useTransition } from "react"
 import { Loader } from "@/components/ui/loader"
+import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
+import {
+  percentageOnInvestmentFunc,
+  returnOnInvestmentFunc,
+} from "@/lib/calculation"
 
 type BettingFormData = {
   currentAmountFromDatabase: number
@@ -17,15 +22,17 @@ export const BettingForm = ({
   currentAmountFromDatabase,
   startAmount,
 }: BettingFormData) => {
-  const { setUserCurrentAmount } = useDashBoardContext()
+  //const { setUserCurrentAmount } = useDashBoardContext()
   const { setUserBetsContext } = useCapitalGainChartContext()
   const ref = useRef<HTMLFormElement>(null)
   const [isPending, startTransition] = useTransition()
+  const { setPercentage, setRoi } = useRoiAndPercentStore()
 
   async function handleSubmit(formData: FormData) {
     const currentAmount =
       currentAmountFromDatabase - Number(formData.get("amount"))
-    setUserCurrentAmount(currentAmount)
+    setPercentage(percentageOnInvestmentFunc(startAmount, currentAmount))
+    setRoi(returnOnInvestmentFunc(startAmount, currentAmount))
 
     const userBets = await fetchUserBets()
     setUserBetsContext([

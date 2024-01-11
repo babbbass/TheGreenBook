@@ -4,10 +4,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "../ui/label"
 import { updateProfileUser } from "@/lib/actions/updateProfile"
 import { Card, CardHeader, CardContent, CardTitle } from "../ui/card"
-import { useDashBoardContext } from "@/context/dashboardContext"
 import { useState, useTransition, useRef } from "react"
 import { WrenchButton } from "../button/wrenchButton"
 import { Loader } from "lucide-react"
+import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
+import {
+  percentageOnInvestmentFunc,
+  returnOnInvestmentFunc,
+} from "@/lib/calculation"
 
 export type Amounts = {
   startAmount: number
@@ -18,15 +22,18 @@ export const ReturnOnInvestmentForm = ({
   currentAmountFromDatabase,
 }: Amounts) => {
   const [modifying, setModifying] = useState(false)
-  const { userCurrentAmount, setUserCurrentAmount } = useDashBoardContext()
   const ref = useRef<HTMLFormElement>(null)
   const [isPending, startTransition] = useTransition()
+  const { currentAmount, setPercentage, setRoi } = useRoiAndPercentStore()
+  console.log(currentAmount, currentAmountFromDatabase)
 
   async function handleSubmit(formData: FormData) {
     if (!modifying) return
     const startAmount = Number(formData.get("startAmount"))
     const currentAmount = Number(formData.get("currentAmount"))
-    setUserCurrentAmount(currentAmount)
+
+    setPercentage(percentageOnInvestmentFunc(startAmount, currentAmount))
+    setRoi(returnOnInvestmentFunc(startAmount, currentAmount))
     await updateProfileUser(startAmount, currentAmount)
   }
 
@@ -74,8 +81,8 @@ export const ReturnOnInvestmentForm = ({
                   max={1000000}
                   name='currentAmount'
                   defaultValue={
-                    userCurrentAmount > 0
-                      ? userCurrentAmount
+                    currentAmount > 0
+                      ? currentAmount
                       : currentAmountFromDatabase
                   }
                   className='text-center text-lg'
