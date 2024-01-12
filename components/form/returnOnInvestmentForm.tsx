@@ -25,7 +25,6 @@ export const ReturnOnInvestmentForm = ({
   const ref = useRef<HTMLFormElement>(null)
   const [isPending, startTransition] = useTransition()
   const { currentAmount, setPercentage, setRoi } = useRoiAndPercentStore()
-  console.log(currentAmount, currentAmountFromDatabase)
 
   async function handleSubmit(formData: FormData) {
     if (!modifying) return

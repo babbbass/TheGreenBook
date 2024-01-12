@@ -12,11 +12,13 @@ export const authOptions: AuthOptions = {
     GithubProvider({
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
+      allowDangerousEmailAccountLinking: true,
     }),
-    // GoogleProvider({
-    //   clientId: env.GOOGLE_ID,
-    //   clientSecret: env.GOOGLE_SECRET,
-    // }),
+    GoogleProvider({
+      clientId: env.GOOGLE_ID,
+      clientSecret: env.GOOGLE_SECRET,
+      allowDangerousEmailAccountLinking: true,
+    }),
   ],
   callbacks: {
     session({ session, user }) {
