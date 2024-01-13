@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { enterBetInDatabase, fetchUserBets } from "@/lib/actions/updateProfile"
-//import { useDashBoardContext } from "@/context/dashboardContext"
 import { useCapitalGainChartContext } from "@/context/capitalGainChartContext"
 import { useRef, useTransition } from "react"
 import { Loader } from "@/components/ui/loader"
@@ -14,6 +13,11 @@ import {
   returnOnInvestmentFunc,
 } from "@/lib/calculation"
 
+const checkIfValidateNumber = (value: number) => {
+  if (value <= 0) return false
+  return true
+}
+
 type BettingFormData = {
   currentAmountFromDatabase: number
   startAmount: number
@@ -22,17 +26,24 @@ export const BettingForm = ({
   currentAmountFromDatabase,
   startAmount,
 }: BettingFormData) => {
-  //const { setUserCurrentAmount } = useDashBoardContext()
   const { setUserBetsContext } = useCapitalGainChartContext()
   const ref = useRef<HTMLFormElement>(null)
   const [isPending, startTransition] = useTransition()
-  const { setPercentage, setRoi } = useRoiAndPercentStore()
+  const { setPercentage, setRoi, setCurrentAmount, currentAmount } =
+    useRoiAndPercentStore()
 
   async function handleSubmit(formData: FormData) {
-    const currentAmount =
-      currentAmountFromDatabase - Number(formData.get("amount"))
-    setPercentage(percentageOnInvestmentFunc(startAmount, currentAmount))
-    setRoi(returnOnInvestmentFunc(startAmount, currentAmount))
+    if (!checkIfValidateNumber(Number(formData.get("amount")))) return
+    if (!checkIfValidateNumber(Number(formData.get("odd")))) return
+
+    const updatedCurrentAmount =
+      currentAmount > 0
+        ? currentAmount - Number(formData.get("amount"))
+        : currentAmountFromDatabase - Number(formData.get("amount"))
+
+    setCurrentAmount(updatedCurrentAmount)
+    setPercentage(percentageOnInvestmentFunc(startAmount, updatedCurrentAmount))
+    setRoi(returnOnInvestmentFunc(startAmount, updatedCurrentAmount))
 
     const userBets = await fetchUserBets()
     setUserBetsContext([
@@ -71,7 +82,6 @@ export const BettingForm = ({
               placeholder='0'
               name='amount'
               className='text-center text-lg font-bold '
-              readOnly={startAmount <= 0}
             />
           </div>
           <div className='flex flex-col gap-4'>
@@ -82,7 +92,6 @@ export const BettingForm = ({
               placeholder='0'
               name='odd'
               className='text-center text-lg font-bold'
-              readOnly={startAmount <= 0}
             />
           </div>
           <div className='w-full flex flex-row-reverse'>
