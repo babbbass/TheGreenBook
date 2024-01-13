@@ -57,7 +57,7 @@ export default async function Home() {
         startAmount={startAmount}
         currentAmountFromDatabase={currentAmount ? currentAmount : 0}
       />
-      <div className='flex flex-col justify-evenly md:flex-row bg-background border-none p-2 gap-4 mb-4'>
+      <div className='flex flex-col justify-evenly sm:flex-row border-none p-2 gap-4 mb-4'>
         <BettingForm
           currentAmountFromDatabase={currentAmount ? currentAmount : 0}
           startAmount={startAmount}
@@ -67,6 +67,7 @@ export default async function Home() {
           startAmount={startAmount}
         />
       </div>
+
       <CapitalGainChartLine startAmount={startAmount} userBets={userBets} />
     </div>
   )

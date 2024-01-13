@@ -39,13 +39,12 @@ export const CapitalGainChartLine = ({
     myAmountGrowth.push({
       name: myAmountGrowth.length,
       montant_actuel: startAmountCopy,
-      // id: index,
     })
     return { amount, odd, status }
   })
 
   return (
-    <Card className='flex flex-col items-center p-2'>
+    <Card className='flex flex-col items-center m-auto justify-center p-2 sm:w-3/4'>
       <CardHeader className='w-full flex items-center font-bold text-2xl'>
         <CardTitle className='italic'>Votre Courbe</CardTitle>
       </CardHeader>

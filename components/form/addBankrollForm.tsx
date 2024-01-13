@@ -45,6 +45,7 @@ export const AddBankrollForm = () => {
                   max={1000000}
                   defaultValue={0}
                   className='text-center text-lg'
+                  onFocus={(e) => (e.target.value = "")}
                 />
               </div>
             </div>

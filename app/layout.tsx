@@ -40,17 +40,15 @@ export default function RootLayout({
           "bg-background"
         )}
       >
-        <DashBoardWrapper>
-          <div className='flex flex-col h-screen py-4 px-2'>
-            <Header />
-            <CapitalGainChartWrapper>
-              <div className='flex-1  max-w-4xl m-auto py-12 w-full'>
-                {children}
-              </div>
-            </CapitalGainChartWrapper>
-            <Footer />
-          </div>
-        </DashBoardWrapper>
+        <div className='flex flex-col h-screen py-4 px-2'>
+          <Header />
+          <CapitalGainChartWrapper>
+            <div className='flex-1  max-w-4xl m-auto py-12 w-full'>
+              {children}
+            </div>
+          </CapitalGainChartWrapper>
+          <Footer />
+        </div>
       </body>
     </html>
   )

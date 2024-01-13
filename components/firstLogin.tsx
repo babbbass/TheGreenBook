@@ -11,8 +11,8 @@ export const FirstLogin = () => {
     <div className='flex  justify-center items-center h-full'>
       <Card className='flex flex-col items-center justify-center w-full p-2 border-none bg-background'>
         <CardHeader className='font-bold  text-lg'>
-          <CardTitle className='sm:text-2xl'>
-            Pour commencer à rentrer vos paris veuillez ajouter une bankroll
+          <CardTitle className='sm:text-2xl leading-loose'>
+            Pour commencer à rentrer vos paris, veuillez ajouter une bankroll
           </CardTitle>
         </CardHeader>
         <CardContent className='flex flex-col items-center'>

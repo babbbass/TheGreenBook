@@ -1,11 +1,11 @@
 "use client"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "../ui/label"
+import { Label } from "@/components/ui/label"
 import { updateProfileUser } from "@/lib/actions/updateProfile"
-import { Card, CardHeader, CardContent, CardTitle } from "../ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { useState, useTransition, useRef } from "react"
-import { WrenchButton } from "../button/wrenchButton"
+import { WrenchButton } from "@/components/button/wrenchButton"
 import { Loader } from "lucide-react"
 import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
 import {
@@ -37,16 +37,13 @@ export const ReturnOnInvestmentForm = ({
   }
 
   return (
-    <>
-      <Card className='py-4 w-full flex flex-col items-center gap-4 sm:mb-4 sm:flex-row md:w-3/4'>
-        <CardHeader className='font-bold text-2xl'>
-          <CardTitle>Montants</CardTitle>
-        </CardHeader>
-        <CardContent className='w-full'>
+    <div>
+      <Card className='py-4 mx-2 flex flex-col m-auto items-center gap-4 sm:mb-4 sm:flex-row sm:w-3/4'>
+        <CardContent className='w-full py-2'>
           <form
             ref={ref}
             action={(ref) => startTransition(() => handleSubmit(ref))}
-            className='flex flex-col justify-center gap-8 sm:flex-row'
+            className='flex flex-col items-center justify-center gap-8 sm:flex-row'
           >
             <div className='flex flex-col items-stretch w-5/6 gap-8 sm:flex-row'>
               <div className='flex flex-col gap-4'>
@@ -54,7 +51,7 @@ export const ReturnOnInvestmentForm = ({
                   className='m-auto font-semibold text-lg'
                   htmlFor='amount'
                 >
-                  demarrage
+                  Capital de depart
                 </Label>
                 <Input
                   type='numeric'
@@ -79,7 +76,7 @@ export const ReturnOnInvestmentForm = ({
                   min={0}
                   max={1000000}
                   name='currentAmount'
-                  defaultValue={
+                  value={
                     currentAmount > 0
                       ? currentAmount
                       : currentAmountFromDatabase
@@ -88,18 +85,18 @@ export const ReturnOnInvestmentForm = ({
                 />
               </div>
             </div>
-            <div className='flex items-end flex-row-reverse gap-2'>
-              <WrenchButton modifying={modifying} setModifying={setModifying} />
+            <div className='flex gap-2'>
               <Button
                 type='submit'
                 className='hover:text-primary-foreground font-bold'
               >
                 {isPending ? <Loader className='mr-2 h-4 w-4' /> : ""} Mon ROI
               </Button>
+              <WrenchButton modifying={modifying} setModifying={setModifying} />
             </div>
           </form>
         </CardContent>
       </Card>
-    </>
+    </div>
   )
 }
