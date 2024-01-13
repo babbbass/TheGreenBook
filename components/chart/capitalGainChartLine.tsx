@@ -19,7 +19,11 @@ type CapitalGainChartLineProps = {
 }
 
 const updateMyAmountGrowth = (status: string, amount: number, odd: number) => {
-  if (status === "Won") return amount * odd
+  if (status === "Won") {
+    const amountToAdd = amount * odd - amount
+    return amountToAdd
+  }
+
   return -amount
 }
 
@@ -32,19 +36,19 @@ export const CapitalGainChartLine = ({
     userBetsContext.length > userBets.length ? userBetsContext : userBets
 
   const myAmountGrowth = [{ name: 0, montant_actuel: startAmount }]
-  let startAmountCopy = startAmount
+  let amountCopy = startAmount
 
   userBetsToDisplay.map(({ amount, odd, status }) => {
-    startAmountCopy += updateMyAmountGrowth(status, amount, odd)
+    amountCopy += updateMyAmountGrowth(status, amount, odd)
     myAmountGrowth.push({
       name: myAmountGrowth.length,
-      montant_actuel: startAmountCopy,
+      montant_actuel: amountCopy,
     })
     return { amount, odd, status }
   })
 
   return (
-    <Card className='flex flex-col items-center m-auto justify-center p-2 sm:w-3/4'>
+    <Card className='flex flex-col m-auto items-center p-2 md:w-3/4'>
       <CardHeader className='w-full flex items-center font-bold text-2xl'>
         <CardTitle className='italic'>Votre Courbe</CardTitle>
       </CardHeader>
