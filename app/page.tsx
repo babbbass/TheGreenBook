@@ -3,9 +3,9 @@ import { ReturnOnInvestmentForm } from "@/components/form/returnOnInvestmentForm
 import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { CapitalGainChartLine } from "@/components/chart/capitalGainChartLine"
-import { Card } from "@/components/ui/card"
 import { DashBoard } from "@/components/ui/dashBoard"
 import { LoginButton } from "@/src/features/layout/LoginButton"
+import { redirect } from "next/navigation"
 
 export default async function Home() {
   const session = await getAuthSession()
@@ -44,28 +44,30 @@ export default async function Home() {
   })
 
   const startAmount = user?.profile?.startAmount
-    ? Number(user.profile.startAmount)
-    : 0
+
   const currentAmount = user?.profile?.currentAmount
-    ? Number(user.profile.currentAmount)
-    : 0
+
+  if (!startAmount) {
+    redirect("/addBankroll")
+  }
 
   return (
-    <>
-      <Card className='flex justify-center w-full p-2 border-none bg-background'>
-        <ReturnOnInvestmentForm
-          startAmount={startAmount}
-          currentAmountFromDatabase={currentAmount}
-        />
-      </Card>
-      <Card className='flex flex-col justify-evenly md:flex-row bg-background border-none p-2 gap-4 mb-4'>
+    <div className='flex flex-col gap-4'>
+      <ReturnOnInvestmentForm
+        startAmount={startAmount}
+        currentAmountFromDatabase={currentAmount ? currentAmount : 0}
+      />
+      <div className='flex flex-col justify-evenly md:flex-row bg-background border-none p-2 gap-4 mb-4'>
         <BettingForm
-          currentAmountFromDatabase={currentAmount}
+          currentAmountFromDatabase={currentAmount ? currentAmount : 0}
           startAmount={startAmount}
         />
-        <DashBoard currentAmount={currentAmount} startAmount={startAmount} />
-      </Card>
+        <DashBoard
+          currentAmount={currentAmount ? currentAmount : 0}
+          startAmount={startAmount}
+        />
+      </div>
       <CapitalGainChartLine startAmount={startAmount} userBets={userBets} />
-    </>
+    </div>
   )
 }
