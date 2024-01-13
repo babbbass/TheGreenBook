@@ -48,7 +48,7 @@ export const CapitalGainChartLine = ({
   })
 
   return (
-    <Card className='flex flex-col m-auto items-center p-2 md:w-3/4'>
+    <Card className='flex flex-col mx-2 items-center p-2'>
       <CardHeader className='w-full flex items-center font-bold text-2xl'>
         <CardTitle className='italic'>Votre Courbe</CardTitle>
       </CardHeader>
