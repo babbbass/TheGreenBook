@@ -5,6 +5,7 @@ import { useState } from "react"
 import { clsx } from "clsx"
 import { Card } from "./ui/card"
 import { WrenchButton } from "./button/wrenchButton"
+import { STATUS_LOST, STATUS_PENDING, STATUS_WIN } from "@/src/constant"
 
 const formatDate = (date: Date) => {
   const day = date.getDate().toString().padStart(2, "0")
@@ -14,7 +15,7 @@ const formatDate = (date: Date) => {
   return `${day}/${month}/${year}`
 }
 
-type Bet = {
+export type BetType = {
   bet: {
     id: string
     userId: string
@@ -22,10 +23,15 @@ type Bet = {
     odd: number
     status: string
     createdAt: Date
+    user: {
+      profile: {
+        currentAmount: number
+      }
+    }
   }
 }
 
-export const Bet = ({ bet }: Bet) => {
+export const Bet = ({ bet }: BetType) => {
   const [betStatus, setBetStatus] = useState(bet.status)
   const [modifyingBet, setModifyingBet] = useState(false)
   return (
@@ -33,8 +39,8 @@ export const Bet = ({ bet }: Bet) => {
       <Card
         className={clsx(
           {
-            "border-red-500": betStatus === "Lost",
-            "border-title": betStatus === "Won",
+            "border-red-500": betStatus === STATUS_LOST,
+            "border-title": betStatus === STATUS_WIN,
           },
           "border-2 mb-2 p-2 flex gap-2 items-center rounded-lg text-sm min-[500px]:text-base"
         )}
@@ -51,8 +57,8 @@ export const Bet = ({ bet }: Bet) => {
           <span className='font-bold'>Status</span>
           <span
             className={clsx({
-              "text-red-500 font-semibold": betStatus === "Lost",
-              "text-title font-semibold": betStatus === "Won",
+              "text-red-500 font-semibold": betStatus === STATUS_LOST,
+              "text-title font-semibold": betStatus === STATUS_WIN,
             })}
           >
             {betStatus}
@@ -65,18 +71,16 @@ export const Bet = ({ bet }: Bet) => {
         <div className='flex gap-2 items-center'>
           <WinningBetButton
             bet={bet}
-            betStatus={betStatus}
             updateStatus={setBetStatus}
-            modifying={betStatus === "Pending" ? true : modifyingBet}
+            modifying={betStatus === STATUS_PENDING ? true : modifyingBet}
           />
           <LosingBetButton
             bet={bet}
-            betStatus={betStatus}
             updateStatus={setBetStatus}
-            modifying={betStatus === "Pending" ? true : modifyingBet}
+            modifying={betStatus === STATUS_PENDING ? true : modifyingBet}
           />
         </div>
-        {betStatus !== "Pending" && (
+        {betStatus !== STATUS_PENDING && (
           <WrenchButton
             modifying={modifyingBet}
             setModifying={setModifyingBet}

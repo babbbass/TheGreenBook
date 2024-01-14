@@ -15,6 +15,23 @@ const Bets = async ({ searchParams }: SearchParams) => {
     where: {
       userId: session?.user.id,
     },
+    select: {
+      id: true,
+      userId: true,
+      amount: true,
+      odd: true,
+      status: true,
+      createdAt: true,
+      user: {
+        select: {
+          profile: {
+            select: {
+              currentAmount: true,
+            },
+          },
+        },
+      },
+    },
     orderBy: {
       createdAt: "desc",
     },
@@ -38,6 +55,7 @@ const Bets = async ({ searchParams }: SearchParams) => {
           <p className='italic'>{`Vous n'avez pas encore de paris`}</p>
         )}
         {myBetsPaginated.map((bet) => (
+          // @ts-expect-error
           <Bet bet={bet} key={bet.id} />
         ))}
         <PaginationControls

@@ -2,19 +2,14 @@
 
 import { prisma } from "@/lib/prisma"
 import { getAuthSession } from "@/lib/auth"
-
-const PENDING = "Pending"
-type BettingForm = {
-  amount: number
-  odd: number
-}
+import { STATUS_PENDING, STATUS_WIN } from "@/src/constant"
 
 export const updateProfileUser = async (
   startAmount: number,
   currentAmount: number
 ) => {
   const session = await getAuthSession()
-  const updateUser = await prisma.profile.upsert({
+  await prisma.profile.upsert({
     where: {
       userId: session?.user.id,
     },
@@ -52,7 +47,7 @@ export const enterBetInDatabase = async (amount: number, odd: number) => {
     data: {
       amount: amount,
       odd: odd,
-      status: PENDING,
+      status: STATUS_PENDING,
       userId: session?.user.id,
     },
   })
@@ -90,7 +85,9 @@ export const updateBetStatusInDatabase = async (
     data: {
       currentAmount: {
         increment:
-          updateBet.status === "Won" ? updateBet.amount * updateBet.odd : 0,
+          updateBet.status === STATUS_WIN
+            ? updateBet.amount * updateBet.odd
+            : 0,
       },
     },
   })

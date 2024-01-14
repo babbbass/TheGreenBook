@@ -5,33 +5,31 @@ import { updateBetStatusInDatabase } from "@/lib/actions/updateProfile"
 import { useTransition } from "react"
 import clsx from "clsx"
 import { Loader } from "lucide-react"
+import { STATUS_LOST, STATUS_WIN } from "@/src/constant"
+import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
+import { BetType } from "@/components/Bet"
 
-export const STATUSLOST = "Lost"
-export const STATUSWIN = "Won"
-export type Bet = {
-  bet: {
-    id: string
-    userId: string
-  }
-  betStatus: string
+export type BetTypeButton = BetType & {
   updateStatus: (arg0: string) => void
   modifying: boolean
 }
 const updateBetStatus = async (bet: { id: string; userId: string }) => {
-  await updateBetStatusInDatabase(bet, STATUSWIN)
+  await updateBetStatusInDatabase(bet, STATUS_WIN)
 }
 
 export const WinningBetButton = ({
   bet,
-  betStatus,
   updateStatus,
   modifying,
-}: Bet) => {
+}: BetTypeButton) => {
   const [isPending, startTransition] = useTransition()
+  const { currentAmount, setCurrentAmount } = useRoiAndPercentStore()
+  const copyCurrentAmount =
+    currentAmount > 0 ? currentAmount : bet?.user?.profile?.currentAmount
   return (
     <Button
       className={clsx("bg-white cursor-pointer w-12 sm:w-14", {
-        "opacity-20": betStatus === STATUSLOST,
+        "opacity-20": bet.status === STATUS_LOST,
         "cursor-not-allowed  bg-gray-200 hover:bg-gray-200": !modifying,
       })}
       onClick={() => {
@@ -39,7 +37,8 @@ export const WinningBetButton = ({
           return
         }
         startTransition(() => {
-          updateStatus(STATUSWIN)
+          setCurrentAmount(copyCurrentAmount + bet.amount * bet.odd)
+          updateStatus(STATUS_WIN)
           updateBetStatus(bet)
         })
       }}

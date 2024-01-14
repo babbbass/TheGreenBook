@@ -3,31 +3,18 @@ import { XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { updateBetStatusInDatabase } from "@/lib/actions/updateProfile"
 import clsx from "clsx"
-import { STATUSLOST, STATUSWIN } from "@/components/button/winningBetButton"
+import { STATUS_LOST, STATUS_WIN } from "@/src/constant"
+import { BetType } from "@/components/button/winningBetButton"
 
-export type Bet = {
-  bet: {
-    id: string
-    userId: string
-  }
-  betStatus: string
-  updateStatus: (arg0: string) => void
-  modifying: boolean
-}
 const updateBetStatus = async (bet: { id: string; userId: string }) => {
-  await updateBetStatusInDatabase(bet, STATUSLOST)
+  await updateBetStatusInDatabase(bet, STATUS_LOST)
 }
 
-export const LosingBetButton = ({
-  bet,
-  betStatus,
-  updateStatus,
-  modifying,
-}: Bet) => {
+export const LosingBetButton = ({ bet, updateStatus, modifying }: BetType) => {
   return (
     <Button
       className={clsx("bg-white cursor-pointer w-12 sm:w-14", {
-        "opacity-20": betStatus === STATUSWIN,
+        "opacity-20": bet.status === STATUS_WIN,
         "cursor-not-allowed bg-gray-200 hover:bg-gray-200": !modifying,
       })}
       onClick={() => {
@@ -35,7 +22,7 @@ export const LosingBetButton = ({
           return
         }
         updateBetStatus(bet)
-        updateStatus(STATUSLOST)
+        updateStatus(STATUS_LOST)
       }}
     >
       <XCircle className='text-red-500' />

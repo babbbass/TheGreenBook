@@ -33,7 +33,6 @@ export const BettingForm = ({
     useRoiAndPercentStore()
 
   async function handleSubmit(formData: FormData) {
-    console.log(typeof currentAmountFromDatabase, typeof currentAmount)
     if (!checkIfValidateNumber(Number(formData.get("amount")))) return
     if (!checkIfValidateNumber(Number(formData.get("odd")))) return
 
@@ -41,7 +40,7 @@ export const BettingForm = ({
       currentAmount > 0
         ? currentAmount - Number(formData.get("amount"))
         : currentAmountFromDatabase - Number(formData.get("amount"))
-    console.log(updatedCurrentAmount)
+
     setCurrentAmount(updatedCurrentAmount)
     setPercentage(percentageOnInvestmentFunc(startAmount, updatedCurrentAmount))
     setRoi(returnOnInvestmentFunc(startAmount, updatedCurrentAmount))
