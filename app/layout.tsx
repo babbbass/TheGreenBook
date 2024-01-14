@@ -5,7 +5,6 @@ import "./globals.css"
 import clsx from "clsx"
 import { Header } from "@/src/features/layout/Header"
 import { Footer } from "@/src/features/layout/Footer"
-import { DashBoardWrapper } from "@/context/dashboardContext"
 import { CapitalGainChartWrapper } from "@/context/capitalGainChartContext"
 
 const inter = Inter({ subsets: ["latin"] })

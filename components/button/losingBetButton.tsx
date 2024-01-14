@@ -4,13 +4,17 @@ import { Button } from "@/components/ui/button"
 import { updateBetStatusInDatabase } from "@/lib/actions/updateProfile"
 import clsx from "clsx"
 import { STATUS_LOST, STATUS_WIN } from "@/src/constant"
-import { BetType } from "@/components/button/winningBetButton"
+import { BetTypeButton } from "@/components/button/winningBetButton"
 
 const updateBetStatus = async (bet: { id: string; userId: string }) => {
   await updateBetStatusInDatabase(bet, STATUS_LOST)
 }
 
-export const LosingBetButton = ({ bet, updateStatus, modifying }: BetType) => {
+export const LosingBetButton = ({
+  bet,
+  updateStatus,
+  modifying,
+}: BetTypeButton) => {
   return (
     <Button
       className={clsx("bg-white cursor-pointer w-12 sm:w-14", {
