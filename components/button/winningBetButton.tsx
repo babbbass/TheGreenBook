@@ -8,6 +8,7 @@ import { Loader } from "lucide-react"
 import { STATUS_LOST, STATUS_WIN } from "@/src/constant"
 import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
 import { BetType } from "@/components/Bet"
+import { returnOnInvestmentFunc } from "@/lib/calculation"
 
 export type BetTypeButton = BetType & {
   updateStatus: (arg0: string) => void
@@ -23,9 +24,10 @@ export const WinningBetButton = ({
   modifying,
 }: BetTypeButton) => {
   const [isPending, startTransition] = useTransition()
-  const { currentAmount, setCurrentAmount } = useRoiAndPercentStore()
+  const { currentAmount, setCurrentAmount, setRoi } = useRoiAndPercentStore()
   const copyCurrentAmount =
     currentAmount > 0 ? currentAmount : bet?.user?.profile?.currentAmount
+
   return (
     <Button
       className={clsx("bg-white cursor-pointer w-12 sm:w-14", {
@@ -37,7 +39,14 @@ export const WinningBetButton = ({
           return
         }
         startTransition(() => {
-          setCurrentAmount(copyCurrentAmount + bet.amount * bet.odd)
+          const newCurrentAmount = copyCurrentAmount + bet.amount * bet.odd
+          setCurrentAmount(newCurrentAmount)
+          setRoi(
+            returnOnInvestmentFunc(
+              bet.user.profile.startAmount,
+              newCurrentAmount
+            )
+          )
           updateStatus(STATUS_WIN)
           updateBetStatus(bet)
         })

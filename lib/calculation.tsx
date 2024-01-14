@@ -9,7 +9,7 @@ export const returnOnInvestmentFunc = (
 ) => {
   if (startAmount <= 0) return 0
   const capitalGain = currentAmount - startAmount
-  const returnOnInvestment = (capitalGain / currentAmount) * 100
+  const returnOnInvestment = (capitalGain / startAmount) * 100
 
   return formatMyNumber(returnOnInvestment)
 }

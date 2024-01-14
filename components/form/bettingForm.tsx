@@ -8,10 +8,7 @@ import { useCapitalGainChartContext } from "@/context/capitalGainChartContext"
 import { useRef, useTransition } from "react"
 import { Loader } from "@/components/ui/loader"
 import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
-import {
-  percentageOnInvestmentFunc,
-  returnOnInvestmentFunc,
-} from "@/lib/calculation"
+import { returnOnInvestmentFunc } from "@/lib/calculation"
 
 const checkIfValidateNumber = (value: number) => {
   if (value <= 0) return false
@@ -29,8 +26,7 @@ export const BettingForm = ({
   const { setUserBetsContext } = useCapitalGainChartContext()
   const ref = useRef<HTMLFormElement>(null)
   const [isPending, startTransition] = useTransition()
-  const { setPercentage, setRoi, setCurrentAmount, currentAmount } =
-    useRoiAndPercentStore()
+  const { setRoi, setCurrentAmount, currentAmount } = useRoiAndPercentStore()
 
   async function handleSubmit(formData: FormData) {
     if (!checkIfValidateNumber(Number(formData.get("amount")))) return
@@ -42,7 +38,6 @@ export const BettingForm = ({
         : currentAmountFromDatabase - Number(formData.get("amount"))
 
     setCurrentAmount(updatedCurrentAmount)
-    setPercentage(percentageOnInvestmentFunc(startAmount, updatedCurrentAmount))
     setRoi(returnOnInvestmentFunc(startAmount, updatedCurrentAmount))
 
     const userBets = await fetchUserBets()

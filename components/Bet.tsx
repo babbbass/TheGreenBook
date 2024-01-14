@@ -26,6 +26,7 @@ export type BetType = {
     user: {
       profile: {
         currentAmount: number
+        startAmount: number
       }
     }
   }
@@ -34,6 +35,7 @@ export type BetType = {
 export const Bet = ({ bet }: BetType) => {
   const [betStatus, setBetStatus] = useState(bet.status)
   const [modifyingBet, setModifyingBet] = useState(false)
+
   return (
     <>
       <Card

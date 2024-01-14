@@ -27,6 +27,7 @@ const Bets = async ({ searchParams }: SearchParams) => {
           profile: {
             select: {
               currentAmount: true,
+              startAmount: true,
             },
           },
         },
