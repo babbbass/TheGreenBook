@@ -10,11 +10,10 @@ import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
 import clsx from "clsx"
 
 type DashBoard = {
-  currentAmount: number
   startAmount: number
 }
-export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
-  const { percentage, roi } = useRoiAndPercentStore()
+export const DashBoard = ({ startAmount }: DashBoard) => {
+  const { percentage, roi, currentAmount } = useRoiAndPercentStore()
   const returnOnInvestment =
     roi !== 0 ? roi : returnOnInvestmentFunc(startAmount, currentAmount)
   const percentageOnInvestment =
@@ -35,7 +34,7 @@ export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
               `h-20 w-20 flex items-center justify-center rounded-full`
             )}
           >
-            <span className='text-xl italic'>{profit}€</span>
+            <span className='text-xl italic'>{profit} €</span>
           </Badge>
         </div>
         <CardContent className='flex flex-col items-center h-full'>
@@ -44,13 +43,6 @@ export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
               <Label className='mb-2 font-semibold text-xl'>
                 Retour sur investissement
               </Label>
-              {/* <Badge
-                className={clsx(
-                  { "bg-orange-600": returnOnInvestment < 0 },
-                  { "bg-red-600": returnOnInvestment < -50 },
-                  `h-20 w-20 flex items-center justify-center rounded-full`
-                )}
-              > */}
               <span
                 className={clsx(
                   { "text-orange-600": returnOnInvestment < 0 },
@@ -60,7 +52,6 @@ export const DashBoard = ({ currentAmount, startAmount }: DashBoard) => {
               >
                 {returnOnInvestment}%
               </span>
-              {/* </Badge> */}
             </div>
           </form>
         </CardContent>

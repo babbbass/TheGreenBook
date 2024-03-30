@@ -1,9 +1,9 @@
+import { CapitalGainChartLine } from "@/components/chart/capitalGainChartLine"
 import { BettingForm } from "@/components/form/bettingForm"
 import { ReturnOnInvestmentForm } from "@/components/form/returnOnInvestmentForm"
+import { DashBoard } from "@/components/ui/dashBoard"
 import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { CapitalGainChartLine } from "@/components/chart/capitalGainChartLine"
-import { DashBoard } from "@/components/ui/dashBoard"
 import { LoginButton } from "@/src/features/layout/LoginButton"
 import { redirect } from "next/navigation"
 
@@ -62,10 +62,7 @@ export default async function Home() {
           currentAmountFromDatabase={currentAmount ? currentAmount : 0}
           startAmount={startAmount}
         />
-        <DashBoard
-          currentAmount={currentAmount ? currentAmount : 0}
-          startAmount={startAmount}
-        />
+        <DashBoard startAmount={startAmount} />
       </div>
 
       <CapitalGainChartLine startAmount={startAmount} userBets={userBets} />
