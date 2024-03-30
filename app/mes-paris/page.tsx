@@ -1,8 +1,9 @@
+import { Bet } from "@/components/Bet"
+import { PaginationControls } from "@/components/pagination/paginationControls"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { getAuthSession } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
-import { Bet } from "@/components/Bet"
-import { PaginationControls } from "@/components/pagination/paginationControls"
+export const revalidate = 0
 
 type SearchParams = {
   searchParams: {
