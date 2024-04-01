@@ -1,7 +1,7 @@
 "use server"
 
-import { prisma } from "@/lib/prisma"
 import { getAuthSession } from "@/lib/auth"
+import { prisma } from "@/lib/prisma"
 import { STATUS_PENDING, STATUS_WIN } from "@/src/constant"
 
 export const updateProfileUser = async (
@@ -101,6 +101,7 @@ export const fetchUserBets = async () => {
       userId: session?.user.id,
     },
     select: {
+      id: true,
       amount: true,
       odd: true,
       status: true,

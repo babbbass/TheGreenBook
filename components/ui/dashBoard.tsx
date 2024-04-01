@@ -11,16 +11,21 @@ import clsx from "clsx"
 
 type DashBoard = {
   startAmount: number
+  currentAmountFromDatabase: number
 }
-export const DashBoard = ({ startAmount }: DashBoard) => {
+export const DashBoard = ({
+  startAmount,
+  currentAmountFromDatabase,
+}: DashBoard) => {
   const { percentage, roi, currentAmount } = useRoiAndPercentStore()
+  const amount = currentAmount === 0 ? currentAmountFromDatabase : currentAmount
   const returnOnInvestment =
-    roi !== 0 ? roi : returnOnInvestmentFunc(startAmount, currentAmount)
+    roi !== 0 ? roi : returnOnInvestmentFunc(startAmount, amount)
   const percentageOnInvestment =
     percentage !== 0
       ? percentage
-      : percentageOnInvestmentFunc(startAmount, currentAmount)
-  const profit = currentAmount - startAmount
+      : percentageOnInvestmentFunc(startAmount, amount)
+  const profit = amount - startAmount
   return (
     <>
       <Card className='py-4 flex flex-col items-center gap-2'>
@@ -30,11 +35,12 @@ export const DashBoard = ({ startAmount }: DashBoard) => {
         <div>
           <Badge
             className={clsx(
+              { "bg-slate-400 border-texthover": profit === 0 },
               { "bg-red-600": profit < 0 },
-              `h-20 w-20 flex items-center justify-center rounded-full`
+              `h-20 flex items-center justify-center rounded-full`
             )}
           >
-            <span className='text-xl italic'>{profit} €</span>
+            <span className='text-xl italic'>{profit.toFixed(2)} €</span>
           </Badge>
         </div>
         <CardContent className='flex flex-col items-center h-full'>

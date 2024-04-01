@@ -1,14 +1,14 @@
 "use client"
-import { Button } from "@/components/ui/button"
-import { BadgeCheck } from "lucide-react"
-import { updateBetStatusInDatabase } from "@/lib/actions/updateProfile"
-import { useTransition } from "react"
-import clsx from "clsx"
-import { Loader } from "lucide-react"
-import { STATUS_LOST, STATUS_WIN } from "@/src/constant"
-import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
 import { BetType } from "@/components/Bet"
+import { Button } from "@/components/ui/button"
+import { updateBetStatusInDatabase } from "@/lib/actions/updateProfile"
 import { returnOnInvestmentFunc } from "@/lib/calculation"
+import { STATUS_LOST, STATUS_WIN } from "@/src/constant"
+import { useCapitalGainChartStore } from "@/src/store/capitalGainChartStore"
+import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
+import clsx from "clsx"
+import { BadgeCheck, Loader } from "lucide-react"
+import { useTransition } from "react"
 
 export type BetTypeButton = BetType & {
   updateStatus: (arg0: string) => void
@@ -25,6 +25,7 @@ export const WinningBetButton = ({
 }: BetTypeButton) => {
   const [isPending, startTransition] = useTransition()
   const { currentAmount, setCurrentAmount, setRoi } = useRoiAndPercentStore()
+  const { setUserBetsStore, userBetsStore } = useCapitalGainChartStore()
   const copyCurrentAmount =
     currentAmount > 0 ? currentAmount : bet?.user?.profile?.currentAmount
 
@@ -41,6 +42,16 @@ export const WinningBetButton = ({
         startTransition(() => {
           const newCurrentAmount = copyCurrentAmount + bet.amount * bet.odd
           setCurrentAmount(newCurrentAmount)
+          const newUserBetsStore = userBetsStore.map((userBet) => {
+            if (userBet.id === bet.id) {
+              return {
+                ...userBet,
+                status: STATUS_WIN,
+              }
+            }
+            return userBet
+          })
+          setUserBetsStore(newUserBetsStore)
           setRoi(
             returnOnInvestmentFunc(
               bet.user.profile.startAmount,

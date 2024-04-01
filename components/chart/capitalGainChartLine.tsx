@@ -1,17 +1,16 @@
 "use client"
-import React from "react"
+import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { useCapitalGainChartStore } from "@/src/store/capitalGainChartStore"
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
   CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
   ResponsiveContainer,
   Tooltip,
-  Legend,
+  XAxis,
+  YAxis,
 } from "recharts"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
-import { useCapitalGainChartContext } from "@/context/capitalGainChartContext"
 
 type CapitalGainChartLineProps = {
   startAmount: number
@@ -31,9 +30,10 @@ export const CapitalGainChartLine = ({
   startAmount,
   userBets,
 }: CapitalGainChartLineProps) => {
-  const { userBetsContext } = useCapitalGainChartContext()
+  const { userBetsStore } = useCapitalGainChartStore()
+  console.log(userBetsStore, userBets)
   const userBetsToDisplay =
-    userBetsContext.length > userBets.length ? userBetsContext : userBets
+    userBetsStore.length > userBets.length ? userBetsStore : userBets
 
   const myAmountGrowth = [{ name: 0, montant_actuel: startAmount }]
   let amountCopy = startAmount

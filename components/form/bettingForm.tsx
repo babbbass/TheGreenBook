@@ -4,9 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Loader } from "@/components/ui/loader"
-import { useCapitalGainChartContext } from "@/context/capitalGainChartContext"
 import { enterBetInDatabase, fetchUserBets } from "@/lib/actions/updateProfile"
 import { returnOnInvestmentFunc } from "@/lib/calculation"
+import { useCapitalGainChartStore } from "@/src/store/capitalGainChartStore"
 import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
 import { useRef, useTransition } from "react"
 
@@ -23,15 +23,16 @@ export const BettingForm = ({
   currentAmountFromDatabase,
   startAmount,
 }: BettingFormData) => {
-  const { setUserBetsContext } = useCapitalGainChartContext()
+  const { setUserBetsStore } = useCapitalGainChartStore()
   const ref = useRef<HTMLFormElement>(null)
   const [isPending, startTransition] = useTransition()
   const { setRoi, setCurrentAmount, currentAmount } = useRoiAndPercentStore()
 
+  const amount = currentAmount === 0 ? currentAmountFromDatabase : currentAmount
   async function handleSubmit(formData: FormData) {
     if (!checkIfValidateNumber(Number(formData.get("amount")))) return
     if (!checkIfValidateNumber(Number(formData.get("odd")))) return
-    if (Number(formData.get("amount")) > currentAmount) return
+    if (Number(formData.get("amount")) > amount) return
 
     const updatedCurrentAmount =
       currentAmount > 0
@@ -41,21 +42,21 @@ export const BettingForm = ({
     setCurrentAmount(updatedCurrentAmount)
     setRoi(returnOnInvestmentFunc(startAmount, updatedCurrentAmount))
 
-    const userBets = await fetchUserBets()
-    setUserBetsContext([
-      ...userBets,
-      {
-        amount: Number(formData.get("amount")),
-        odd: Number(formData.get("odd")),
-        status: "Pending",
-      },
-    ])
-
     await enterBetInDatabase(
       Number(formData.get("amount")),
       Number(formData.get("odd"))
     )
 
+    const userBets = await fetchUserBets()
+    setUserBetsStore([
+      ...userBets,
+      {
+        id: userBets.pop()?.id,
+        amount: Number(formData.get("amount")),
+        odd: Number(formData.get("odd")),
+        status: "Pending",
+      },
+    ])
     ref.current?.reset()
   }
 
@@ -77,8 +78,8 @@ export const BettingForm = ({
             <Input
               placeholder='0'
               name='amount'
-              className='text-center text-lg font-bold'
-              readOnly={currentAmount <= 0 ? true : false}
+              className='text-center text-lg from-neutral-500'
+              readOnly={amount <= 0 ? true : false}
             />
           </div>
           <div className='flex flex-col gap-4'>
@@ -88,8 +89,8 @@ export const BettingForm = ({
             <Input
               placeholder='0'
               name='odd'
-              className='text-center text-lg font-bold'
-              readOnly={currentAmount <= 0 ? true : false}
+              className='text-center text-lg from-neutral-500'
+              readOnly={amount <= 0 ? true : false}
             />
           </div>
           <div className='w-full flex flex-row-reverse'>

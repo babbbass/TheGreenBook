@@ -37,6 +37,7 @@ export default async function Home() {
       userId: session?.user.id,
     },
     select: {
+      id: true,
       amount: true,
       odd: true,
       status: true,
@@ -62,7 +63,10 @@ export default async function Home() {
           currentAmountFromDatabase={currentAmount ? currentAmount : 0}
           startAmount={startAmount}
         />
-        <DashBoard startAmount={startAmount} />
+        <DashBoard
+          startAmount={startAmount}
+          currentAmountFromDatabase={currentAmount ? currentAmount : 0}
+        />
       </div>
 
       <CapitalGainChartLine startAmount={startAmount} userBets={userBets} />
