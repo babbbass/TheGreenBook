@@ -48,8 +48,6 @@ export const BettingForm = ({
     setCurrentAmount(updatedCurrentAmount)
     setRoi(returnOnInvestmentFunc(startAmount, updatedCurrentAmount))
 
-    await enterBetInDatabase(formAmount, formOdd)
-
     const userBets = await fetchUserBets()
     setUserBetsStore([
       ...userBets,
@@ -60,6 +58,7 @@ export const BettingForm = ({
         status: "Pending",
       },
     ])
+    await enterBetInDatabase(formAmount, formOdd)
     ref.current?.reset()
   }
 
