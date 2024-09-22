@@ -31,7 +31,6 @@ export const CapitalGainChartLine = ({
   userBets,
 }: CapitalGainChartLineProps) => {
   const { userBetsStore } = useCapitalGainChartStore()
-  console.log(userBetsStore, userBets)
   const userBetsToDisplay =
     userBetsStore.length > userBets.length ? userBetsStore : userBets
 

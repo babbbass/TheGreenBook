@@ -10,6 +10,10 @@ import { useCapitalGainChartStore } from "@/src/store/capitalGainChartStore"
 import { useRoiAndPercentStore } from "@/src/store/roiAndPercentStore"
 import { useRef, useTransition } from "react"
 
+function formatNumber(number: string) {
+  let newNumber = number?.replace(/,/g, ".").replace(/\s+/g, "")
+  return Number(newNumber)
+}
 const checkIfValidateNumber = (value: number) => {
   if (value <= 0) return false
   return true
@@ -30,30 +34,29 @@ export const BettingForm = ({
 
   const amount = currentAmount === 0 ? currentAmountFromDatabase : currentAmount
   async function handleSubmit(formData: FormData) {
-    if (!checkIfValidateNumber(Number(formData.get("amount")))) return
-    if (!checkIfValidateNumber(Number(formData.get("odd")))) return
-    if (Number(formData.get("amount")) > amount) return
+    const formAmount = formatNumber(String(formData.get("amount")))
+    const formOdd = formatNumber(String(formData.get("odd")))
+    if (!checkIfValidateNumber(formAmount)) return
+    if (!checkIfValidateNumber(formOdd)) return
+    if (formAmount > amount) return
 
     const updatedCurrentAmount =
       currentAmount > 0
-        ? currentAmount - Number(formData.get("amount"))
-        : currentAmountFromDatabase - Number(formData.get("amount"))
+        ? currentAmount - formAmount
+        : currentAmountFromDatabase - formAmount
 
     setCurrentAmount(updatedCurrentAmount)
     setRoi(returnOnInvestmentFunc(startAmount, updatedCurrentAmount))
 
-    await enterBetInDatabase(
-      Number(formData.get("amount")),
-      Number(formData.get("odd"))
-    )
+    await enterBetInDatabase(formAmount, formOdd)
 
     const userBets = await fetchUserBets()
     setUserBetsStore([
       ...userBets,
       {
         id: userBets.pop()?.id,
-        amount: Number(formData.get("amount")),
-        odd: Number(formData.get("odd")),
+        amount: formAmount,
+        odd: formOdd,
         status: "Pending",
       },
     ])
