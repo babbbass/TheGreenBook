@@ -40,7 +40,8 @@ export const WinningBetButton = ({
           return
         }
         startTransition(() => {
-          const newCurrentAmount = copyCurrentAmount + bet.amount * bet.odd
+          const newCurrentAmount =
+            Math.round((copyCurrentAmount + bet.amount * bet.odd) * 100) / 100
           setCurrentAmount(newCurrentAmount)
           const newUserBetsStore = userBetsStore.map((userBet) => {
             if (userBet.id === bet.id) {
